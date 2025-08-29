@@ -1,0 +1,143 @@
+import { Phone, Mail, MapPin, Clock, Facebook, Instagram, Linkedin } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import atmaLogo from '../assets/atma-logo.png'
+
+const Footer = () => {
+  const handleWhatsAppClick = () => {
+    const phone = "5564981235976"
+    const message = "Olá! Gostaria de saber mais sobre consórcios contemplados."
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`
+    window.open(url, '_blank')
+  }
+
+  const handleInstagramClick = () => {
+    window.open('https://instagram.com/atmaseguros', '_blank')
+  }
+
+  const handleFacebookClick = () => {
+    window.open('https://www.facebook.com/profile.php?id=100011839336247', '_blank')
+  }
+
+  return (
+    <footer className="bg-gray-900 text-white">
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Company Info */}
+          <div className="space-y-4">
+            <img 
+              src={atmaLogo} 
+              alt="Atma Seguros e Consórcios" 
+              className="h-16 w-auto filter brightness-0 invert"
+            />
+            <p className="text-gray-300 leading-relaxed">
+              Especialistas em consórcios contemplados. Realizamos sonhos com transparência, 
+              agilidade e as melhores condições do mercado.
+            </p>
+            <div className="flex space-x-4">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="p-2 hover:bg-blue-600"
+                onClick={handleFacebookClick}
+              >
+                <Facebook className="w-5 h-5" />
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="p-2 hover:bg-blue-600"
+                onClick={handleInstagramClick}
+              >
+                <Instagram className="w-5 h-5" />
+              </Button>
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold">Links Rápidos</h3>
+            <nav className="flex flex-col space-y-2">
+              <a href="#inicio" className="text-gray-300 hover:text-white transition-colors">
+                Início
+              </a>
+              <a href="#simulador" className="text-gray-300 hover:text-white transition-colors">
+                Simulador
+              </a>
+              <a href="#oportunidades" className="text-gray-300 hover:text-white transition-colors">
+                Oportunidades
+              </a>
+              <a href="#contato" className="text-gray-300 hover:text-white transition-colors">
+                Contato
+              </a>
+            </nav>
+          </div>
+
+          {/* Services */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold">Nossos Serviços</h3>
+            <nav className="flex flex-col space-y-2">
+              <span className="text-gray-300">Consórcios de Imóveis</span>
+              <span className="text-gray-300">Consórcios de Veículos</span>
+              <span className="text-gray-300">Consórcios de Serviços</span>
+              <span className="text-gray-300">Consultoria Especializada</span>
+            </nav>
+          </div>
+
+          {/* Contact Info */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold">Contato</h3>
+            <div className="space-y-3">
+              <div className="flex items-center space-x-3">
+                <Phone className="w-5 h-5 text-blue-400" />
+                <span className="text-gray-300">(64) 98123-5976</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Mail className="w-5 h-5 text-blue-400" />
+                <span className="text-gray-300">atma@atmaseguros.com.br</span>
+              </div>
+              <div className="flex items-start space-x-3">
+                <MapPin className="w-5 h-5 text-blue-400 mt-1" />
+                <span className="text-gray-300">
+                  R. Benedito Bueno, Chácara C<br />
+                  Vila São Simão<br />
+                  Indiara - GO, 75955-000
+                </span>
+              </div>
+              <div className="pt-3">
+                <Button 
+                  className="w-full bg-green-600 hover:bg-green-700"
+                  onClick={handleWhatsAppClick}
+                >
+                  Falar no WhatsApp
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="border-t border-gray-800 mt-12 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <div className="text-gray-400 text-sm">
+              © 2025 Atma Seguros e Consórcios. Todos os direitos reservados.
+            </div>
+            <div className="flex space-x-6 text-sm">
+              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                Política de Privacidade
+              </a>
+              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                Termos de Uso
+              </a>
+              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                LGPD
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  )
+}
+
+export default Footer
+
