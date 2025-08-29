@@ -20,19 +20,20 @@ const Chatbot = () => {
       type: 'bot',
       content: `Olá! 👋 Seja bem-vindo(a) à Atma Seguros e Consórcios!
 
-Sou seu assistente virtual e estou aqui para ajudar você a encontrar a carta de consórcio contemplada ideal.
+Sou seu assistente virtual especializado em **GRUPOS DE CONSÓRCIO**.
 
-🏠 **Temos cartas disponíveis para:**
-• Imóveis (R$ 50k a R$ 800k)
-• Veículos (R$ 20k a R$ 200k)  
-• Serviços (R$ 10k a R$ 100k)
+🎯 **Nossas especialidades:**
+🆕 **Grupos em Formação** - Taxa 15% (máxima economia)
+⏳ **Grupos em Andamento** - Alta chance de contemplação
+💰 **Economia de até 40%** vs financiamento bancário
 
-✅ **Vantagens:**
-• Crédito liberado na hora
-• Sem burocracia excessiva
-• 98% de aprovação
+✅ **Vantagens dos nossos grupos:**
+• Entrada facilitada
+• Sem juros abusivos
+• Economia real comprovada
+• Acompanhamento especializado
 
-**Como posso ajudar você hoje?**`,
+**Para quando você precisa do bem que deseja adquirir?**`,
       timestamp: new Date()
     }
   ])
@@ -40,7 +41,7 @@ Sou seu assistente virtual e estou aqui para ajudar você a encontrar a carta de
   const [isLoading, setIsLoading] = useState(false)
   const messagesEndRef = useRef(null)
 
-  const API_BASE = 'https://dyh6i3c0q9l9.manus.space/api'
+  const API_BASE = 'https://xlhyimcdj3p8.manus.space/api'
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -134,11 +135,11 @@ Estamos prontos para atender você!`,
   }
 
   const quickReplies = [
-    'Quero um imóvel',
-    'Preciso de um veículo',
+    'Grupos em formação',
+    'Grupos em andamento', 
+    'Quero economizar',
     'Como funciona?',
-    'Quais os valores?',
-    'Falar com atendente'
+    'Falar com consultor'
   ]
 
   const handleQuickReply = (reply) => {
@@ -180,8 +181,8 @@ Estamos prontos para atender você!`,
           {/* Texto flutuante chamativo */}
           <div className="absolute -left-48 top-2 bg-yellow-400 text-gray-900 px-3 py-2 rounded-lg text-sm font-bold shadow-lg animate-bounce hidden lg:block">
             <div className="flex items-center space-x-1">
-              <span>🔥</span>
-              <span>Cartas contempladas disponíveis!</span>
+              <span>🆕</span>
+              <span>Grupos em formação disponíveis!</span>
             </div>
             <div className="absolute top-1/2 right-0 transform translate-x-full -translate-y-1/2 w-0 h-0 border-t-4 border-b-4 border-l-4 border-transparent border-l-yellow-400"></div>
           </div>
