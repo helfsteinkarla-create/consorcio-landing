@@ -148,17 +148,43 @@ Estamos prontos para atender você!`,
   if (!isOpen) {
     return (
       <div className="fixed bottom-6 right-6 z-50">
-        <Button
-          onClick={() => setIsOpen(true)}
-          className="w-16 h-16 rounded-full bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl transition-all duration-300 animate-pulse"
-        >
-          <MessageCircle className="w-8 h-8 text-white" />
-        </Button>
-        
-        {/* Tooltip */}
-        <div className="absolute bottom-20 right-0 bg-gray-800 text-white px-3 py-2 rounded-lg text-sm whitespace-nowrap opacity-0 hover:opacity-100 transition-opacity">
-          Fale conosco!
-          <div className="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-800"></div>
+        {/* Ícone principal do chatbot com destaque máximo */}
+        <div className="relative">
+          {/* Círculos de pulsação para chamar atenção */}
+          <div className="absolute inset-0 w-20 h-20 bg-blue-500 rounded-full animate-ping opacity-20"></div>
+          <div className="absolute inset-0 w-20 h-20 bg-blue-400 rounded-full animate-pulse opacity-30"></div>
+          
+          {/* Botão principal */}
+          <Button
+            onClick={() => setIsOpen(true)}
+            className="relative w-20 h-20 rounded-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-110 group"
+          >
+            <MessageCircle className="w-10 h-10 text-white group-hover:animate-bounce" />
+            
+            {/* Badge de notificação */}
+            <div className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center animate-bounce">
+              <span className="text-white text-xs font-bold">!</span>
+            </div>
+          </Button>
+          
+          {/* Tooltip animado */}
+          <div className="absolute bottom-24 right-0 bg-gray-900 text-white px-4 py-3 rounded-xl text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 shadow-xl">
+            <div className="flex items-center space-x-2">
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+              <span className="font-semibold">💬 Fale conosco agora!</span>
+            </div>
+            <div className="text-xs text-gray-300 mt-1">Especialistas em consórcios online</div>
+            <div className="absolute top-full right-6 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+          </div>
+          
+          {/* Texto flutuante chamativo */}
+          <div className="absolute -left-48 top-2 bg-yellow-400 text-gray-900 px-3 py-2 rounded-lg text-sm font-bold shadow-lg animate-bounce hidden lg:block">
+            <div className="flex items-center space-x-1">
+              <span>🔥</span>
+              <span>Cartas contempladas disponíveis!</span>
+            </div>
+            <div className="absolute top-1/2 right-0 transform translate-x-full -translate-y-1/2 w-0 h-0 border-t-4 border-b-4 border-l-4 border-transparent border-l-yellow-400"></div>
+          </div>
         </div>
       </div>
     )
