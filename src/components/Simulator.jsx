@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Calculator, Car, Home, Wrench, ArrowRight } from 'lucide-react'
+import { Calculator, Car, Home, Wrench, ArrowRight, Clock, Zap, TrendingUp } from 'lucide-react'
 
 const Simulator = () => {
   const [formData, setFormData] = useState({
@@ -31,6 +31,45 @@ const Simulator = () => {
     { value: '96', label: '96 meses' },
     { value: '120', label: '120 meses' },
     { value: '180', label: '180 meses' }
+  ]
+
+  const modalidades = [
+    {
+      id: 'contemplada',
+      nome: 'Carta Contemplada',
+      icon: Zap,
+      cor: 'text-yellow-600',
+      bgCor: 'bg-yellow-50',
+      borderCor: 'border-yellow-200',
+      descricao: 'Crédito liberado imediatamente',
+      vantagens: ['Sem espera', 'Crédito hoje mesmo', 'Ideal para urgência'],
+      multiplicador: 1.0,
+      prazoAjuste: 0
+    },
+    {
+      id: 'andamento',
+      nome: 'Carta em Andamento',
+      icon: TrendingUp,
+      cor: 'text-blue-600',
+      bgCor: 'bg-blue-50',
+      borderCor: 'border-blue-200',
+      descricao: 'Grupos ativos com boa chance de contemplação',
+      vantagens: ['Melhor custo-benefício', 'Contemplação em 6-18 meses', 'Parcelas menores'],
+      multiplicador: 0.85,
+      prazoAjuste: -6
+    },
+    {
+      id: 'novo',
+      nome: 'Novo Grupo',
+      icon: Clock,
+      cor: 'text-green-600',
+      bgCor: 'bg-green-50',
+      borderCor: 'border-green-200',
+      descricao: 'Grupos novos com máxima economia',
+      vantagens: ['Menor custo total', 'Parcelas reduzidas', 'Planejamento longo prazo'],
+      multiplicador: 0.95,
+      prazoAjuste: 0
+    }
   ]
 
   const handleInputChange = (field, value) => {
@@ -73,85 +112,49 @@ const Simulator = () => {
 
       const taxa = taxas[formData.tipo] || taxas['veiculo'];
 
-      // Cálculo da parcela mensal conforme fórmula oficial:
-      // Parcela = (Valor/Prazo) + (Valor*TaxaAdmin/Prazo) + (Valor*FundoReserva/Prazo) + SeguroMensal
-      const fundoComumMensal = valorCartaCredito / prazo;
-      const taxaAdministracaoMensal = (valorCartaCredito * taxa.administracao) / prazo;
-      const fundoReservaMensal = (valorCartaCredito * taxa.fundoReserva) / prazo;
-      const seguroMensal = valorCartaCredito * taxa.seguro;
+      // Calcular para cada modalidade
+      const resultadosPorModalidade = modalidades.map(modalidade => {
+        const valorAjustado = valorCartaCredito * modalidade.multiplicador;
+        const prazoAjustado = Math.max(prazo + modalidade.prazoAjuste, 12);
+        
+        // Cálculo da parcela mensal conforme fórmula oficial:
+        const fundoComumMensal = valorAjustado / prazoAjustado;
+        const taxaAdministracaoMensal = (valorAjustado * taxa.administracao) / prazoAjustado;
+        const fundoReservaMensal = (valorAjustado * taxa.fundoReserva) / prazoAjustado;
+        const seguroMensal = valorAjustado * taxa.seguro;
 
-      const valorParcela = fundoComumMensal + taxaAdministracaoMensal + fundoReservaMensal + seguroMensal;
+        const valorParcela = fundoComumMensal + taxaAdministracaoMensal + fundoReservaMensal + seguroMensal;
 
-      // Custo total do consórcio
-      const custoTotalAdministracao = valorCartaCredito * taxa.administracao;
-      const custoTotalFundoReserva = valorCartaCredito * taxa.fundoReserva;
-      const custoTotalSeguro = seguroMensal * prazo;
-      const custoTotal = valorCartaCredito + custoTotalAdministracao + custoTotalFundoReserva + custoTotalSeguro;
-      
-      // Simular cartas compatíveis baseadas nos cálculos reais
-      const cartasCompativeis = [
-        {
-          codigo: '#2721',
-          credito: valorCartaCredito,
-          entrada: entrada,
-          parcelas: prazo,
-          valorParcela: valorParcela,
-          disponivel: true,
+        // Custo total do consórcio
+        const custoTotalAdministracao = valorAjustado * taxa.administracao;
+        const custoTotalFundoReserva = valorAjustado * taxa.fundoReserva;
+        const custoTotalSeguro = seguroMensal * prazoAjustado;
+        const custoTotal = valorAjustado + custoTotalAdministracao + custoTotalFundoReserva + custoTotalSeguro;
+        
+        return {
+          modalidade,
+          valorCredito: valorAjustado,
+          prazo: prazoAjustado,
+          valorParcela,
+          custoTotal,
+          economia: (valor * 1.5) - custoTotal, // Comparação com financiamento
           detalhes: {
             fundoComum: fundoComumMensal,
             taxaAdmin: taxaAdministracaoMensal,
             fundoReserva: fundoReservaMensal,
-            seguro: seguroMensal,
-            custoTotal: custoTotal
-          }
-        },
-        {
-          codigo: '#2767',
-          credito: valorCartaCredito * 0.9,
-          entrada: entrada * 0.95,
-          parcelas: Math.max(prazo - 6, 12),
-          valorParcela: valorParcela * 0.9,
-          disponivel: true,
-          detalhes: {
-            fundoComum: (valorCartaCredito * 0.9) / Math.max(prazo - 6, 12),
-            taxaAdmin: ((valorCartaCredito * 0.9) * taxa.administracao) / Math.max(prazo - 6, 12),
-            fundoReserva: ((valorCartaCredito * 0.9) * taxa.fundoReserva) / Math.max(prazo - 6, 12),
-            seguro: (valorCartaCredito * 0.9) * taxa.seguro,
-            custoTotal: custoTotal * 0.9
-          }
-        },
-        {
-          codigo: '#2764',
-          credito: valorCartaCredito * 1.1,
-          entrada: entrada * 1.05,
-          parcelas: prazo + 12,
-          valorParcela: valorParcela * 0.95,
-          disponivel: false,
-          detalhes: {
-            fundoComum: (valorCartaCredito * 1.1) / (prazo + 12),
-            taxaAdmin: ((valorCartaCredito * 1.1) * taxa.administracao) / (prazo + 12),
-            fundoReserva: ((valorCartaCredito * 1.1) * taxa.fundoReserva) / (prazo + 12),
-            seguro: (valorCartaCredito * 1.1) * taxa.seguro,
-            custoTotal: custoTotal * 1.1
+            seguro: seguroMensal
           }
         }
-      ]
+      });
 
       setResultado({
         valorSolicitado: valor,
         entradaPaga: entrada,
         prazoEscolhido: prazo,
-        valorParcela: valorParcela,
-        totalJuros: custoTotal - valorCartaCredito,
-        cartasCompativeis,
-        detalhesCalculo: {
-          fundoComum: fundoComumMensal,
-          taxaAdministracao: taxaAdministracaoMensal,
-          fundoReserva: fundoReservaMensal,
-          seguro: seguroMensal,
-          taxaAdminPercent: (taxa.administracao * 100).toFixed(1),
-          fundoReservaPercent: (taxa.fundoReserva * 100).toFixed(1),
-          custoTotal: custoTotal
+        modalidades: resultadosPorModalidade,
+        taxaInfo: {
+          administracao: (taxa.administracao * 100).toFixed(1),
+          fundoReserva: (taxa.fundoReserva * 100).toFixed(1)
         }
       })
       
@@ -159,20 +162,20 @@ const Simulator = () => {
     }, 2000)
   }
 
-  const handleWhatsAppContact = (carta = null) => {
+  const handleWhatsAppContact = (modalidadeEscolhida = null) => {
     const phone = "5564981235976"
-    let message = `Olá! Gostaria de mais informações sobre consórcios contemplados.\n\n`
+    let message = `Olá! Gostaria de mais informações sobre consórcios.\n\n`
     message += `Simulação realizada:\n`
     message += `• Tipo: ${tiposBem.find(t => t.id === formData.tipo)?.label}\n`
     message += `• Valor desejado: ${formatCurrency(parseFloat(formData.valor))}\n`
     message += `• Entrada disponível: ${formatCurrency(parseFloat(formData.entrada))}\n`
     message += `• Prazo: ${formData.prazo} meses\n`
     
-    if (carta) {
-      message += `\nInteresse na carta ${carta.codigo}:\n`
-      message += `• Crédito: ${formatCurrency(carta.credito)}\n`
-      message += `• Entrada: ${formatCurrency(carta.entrada)}\n`
-      message += `• Parcelas: ${carta.parcelas}x ${formatCurrency(carta.valorParcela)}`
+    if (modalidadeEscolhida) {
+      message += `\nInteresse na modalidade: ${modalidadeEscolhida.modalidade.nome}\n`
+      message += `• Crédito: ${formatCurrency(modalidadeEscolhida.valorCredito)}\n`
+      message += `• Parcela: ${formatCurrency(modalidadeEscolhida.valorParcela)}\n`
+      message += `• Prazo: ${modalidadeEscolhida.prazo} meses`
     }
     
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`
@@ -187,17 +190,17 @@ const Simulator = () => {
             Simulador de Consórcios
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Descubra as melhores opções de consórcio contemplado para você. 
-            Simule agora e encontre a carta ideal para realizar seus sonhos.
+            Descubra as melhores opções de consórcio para você. 
+            Compare as 3 modalidades disponíveis e encontre a ideal para seu perfil.
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <Card className="shadow-xl">
             <CardHeader className="bg-blue-600 text-white">
               <CardTitle className="flex items-center text-2xl">
                 <Calculator className="w-8 h-8 mr-3" />
-                Simulação Gratuita
+                Simulação Gratuita - Portfólio Completo
               </CardTitle>
             </CardHeader>
             <CardContent className="p-8">
@@ -282,7 +285,7 @@ const Simulator = () => {
                   disabled={loading}
                   className="bg-blue-600 hover:bg-blue-700 text-white px-12 py-4 text-lg font-semibold"
                 >
-                  {loading ? 'Calculando...' : 'Simular Agora'}
+                  {loading ? 'Calculando...' : 'Simular Todas as Modalidades'}
                   {!loading && <ArrowRight className="w-5 h-5 ml-2" />}
                 </Button>
               </div>
@@ -291,7 +294,7 @@ const Simulator = () => {
               {resultado && (
                 <div className="border-t pt-8">
                   <h3 className="text-2xl font-bold text-gray-800 mb-6">
-                    Resultado da Simulação
+                    Resultado da Simulação - 3 Modalidades
                   </h3>
                   
                   {/* Aviso importante */}
@@ -309,63 +312,134 @@ const Simulator = () => {
                         <p className="mt-1 text-sm text-yellow-700">
                           Os valores apresentados são aproximados e têm caráter meramente informativo. 
                           Para obter valores reais e condições específicas, preencha o formulário de contato 
-                          e nossa equipe especializada entrará em contato com você.
+                          e nossa equipe especializada da Atma Consórcios entrará em contato com você.
                         </p>
                       </div>
                     </div>
                   </div>
                   
-                  {/* Resumo */}
-                  <div className="grid md:grid-cols-4 gap-4 mb-8">
-                    <div className="bg-blue-50 p-4 rounded-lg text-center">
-                      <div className="text-sm text-gray-600">Valor Solicitado</div>
-                      <div className="text-xl font-bold text-blue-600">
-                        {formatCurrency(resultado.valorSolicitado)}
-                      </div>
-                    </div>
-                    <div className="bg-green-50 p-4 rounded-lg text-center">
-                      <div className="text-sm text-gray-600">Entrada</div>
-                      <div className="text-xl font-bold text-green-600">
-                        {formatCurrency(resultado.entradaPaga)}
-                      </div>
-                    </div>
-                    <div className="bg-purple-50 p-4 rounded-lg text-center">
-                      <div className="text-sm text-gray-600">Prazo</div>
-                      <div className="text-xl font-bold text-purple-600">
-                        {resultado.prazoEscolhido} meses
-                      </div>
-                    </div>
-                    <div className="bg-orange-50 p-4 rounded-lg text-center">
-                      <div className="text-sm text-gray-600">Parcela Estimada</div>
-                      <div className="text-xl font-bold text-orange-600">
-                        {formatCurrency(resultado.valorParcela)}
-                      </div>
+                  {/* Comparação das modalidades */}
+                  <div className="grid md:grid-cols-3 gap-6 mb-8">
+                    {resultado.modalidades.map((item, index) => {
+                      const Icon = item.modalidade.icon
+                      return (
+                        <Card key={item.modalidade.id} className={`${item.modalidade.borderCor} border-2`}>
+                          <CardHeader className={`${item.modalidade.bgCor} pb-4`}>
+                            <div className="flex items-center justify-center mb-2">
+                              <Icon className={`w-8 h-8 ${item.modalidade.cor}`} />
+                            </div>
+                            <CardTitle className={`text-center ${item.modalidade.cor} text-lg`}>
+                              {item.modalidade.nome}
+                            </CardTitle>
+                            <p className="text-center text-sm text-gray-600">
+                              {item.modalidade.descricao}
+                            </p>
+                          </CardHeader>
+                          <CardContent className="pt-4">
+                            <div className="space-y-3 mb-4">
+                              <div className="flex justify-between">
+                                <span className="text-sm text-gray-600">Crédito:</span>
+                                <span className="font-semibold">{formatCurrency(item.valorCredito)}</span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="text-sm text-gray-600">Parcela:</span>
+                                <span className="font-semibold text-lg">{formatCurrency(item.valorParcela)}</span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="text-sm text-gray-600">Prazo:</span>
+                                <span className="font-semibold">{item.prazo} meses</span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="text-sm text-gray-600">Total:</span>
+                                <span className="font-semibold">{formatCurrency(item.custoTotal)}</span>
+                              </div>
+                              <div className="flex justify-between border-t pt-2">
+                                <span className="text-sm text-green-600">Economia:</span>
+                                <span className="font-semibold text-green-600">{formatCurrency(item.economia)}</span>
+                              </div>
+                            </div>
+                            
+                            <div className="mb-4">
+                              <h5 className="font-semibold text-sm mb-2">Vantagens:</h5>
+                              <ul className="text-xs space-y-1">
+                                {item.modalidade.vantagens.map((vantagem, idx) => (
+                                  <li key={idx} className="flex items-center">
+                                    <span className="w-1 h-1 bg-green-500 rounded-full mr-2"></span>
+                                    {vantagem}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                            
+                            <Button
+                              onClick={() => handleWhatsAppContact(item)}
+                              className={`w-full ${item.modalidade.cor.replace('text-', 'bg-').replace('600', '500')} hover:${item.modalidade.cor.replace('text-', 'bg-').replace('600', '600')} text-white`}
+                            >
+                              Tenho Interesse
+                            </Button>
+                          </CardContent>
+                        </Card>
+                      )
+                    })}
+                  </div>
+
+                  {/* Resumo comparativo */}
+                  <div className="bg-gray-50 rounded-lg p-6 mb-6">
+                    <h4 className="text-lg font-bold text-gray-800 mb-4">
+                      Resumo Comparativo
+                    </h4>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr className="border-b">
+                            <th className="text-left py-2">Modalidade</th>
+                            <th className="text-right py-2">Parcela</th>
+                            <th className="text-right py-2">Prazo</th>
+                            <th className="text-right py-2">Total</th>
+                            <th className="text-right py-2">Economia</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {resultado.modalidades.map((item) => (
+                            <tr key={item.modalidade.id} className="border-b">
+                              <td className="py-2 font-medium">{item.modalidade.nome}</td>
+                              <td className="text-right py-2">{formatCurrency(item.valorParcela)}</td>
+                              <td className="text-right py-2">{item.prazo}m</td>
+                              <td className="text-right py-2">{formatCurrency(item.custoTotal)}</td>
+                              <td className="text-right py-2 text-green-600">{formatCurrency(item.economia)}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
                     </div>
                   </div>
 
-                  {/* Detalhamento dos cálculos */}
-                  {resultado.detalhesCalculo && (
-                    <div className="bg-gray-50 rounded-lg p-6 mb-8">
-                      <h4 className="text-lg font-bold text-gray-800 mb-4">
-                        Composição da Parcela Mensal
-                      </h4>
-                      <div className="grid md:grid-cols-2 gap-6">
-                        <div className="space-y-3">
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">Fundo Comum:</span>
-                            <span className="font-semibold">{formatCurrency(resultado.detalhesCalculo.fundoComum)}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">Taxa de Administração ({resultado.detalhesCalculo.taxaAdminPercent}%):</span>
-                            <span className="font-semibold">{formatCurrency(resultado.detalhesCalculo.taxaAdministracao)}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">Fundo de Reserva ({resultado.detalhesCalculo.fundoReservaPercent}%):</span>
-                            <span className="font-semibold">{formatCurrency(resultado.detalhesCalculo.fundoReserva)}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">Seguro:</span>
-                            <span className="font-semibold">{formatCurrency(resultado.detalhesCalculo.seguro)}</span>
+                  {/* Call to action geral */}
+                  <div className="text-center bg-blue-50 rounded-lg p-6">
+                    <h4 className="text-xl font-bold text-gray-800 mb-2">
+                      Quer saber mais sobre essas modalidades?
+                    </h4>
+                    <p className="text-gray-600 mb-4">
+                      Nossa equipe especializada pode te ajudar a escolher a modalidade ideal para seu perfil
+                    </p>
+                    <Button
+                      onClick={() => handleWhatsAppContact()}
+                      className="bg-green-600 hover:bg-green-700 text-white px-8 py-3"
+                    >
+                      Falar com Especialista
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default Simulatoremibold">{formatCurrency(resultado.detalhesCalculo.seguro)}</span>
                           </div>
                         </div>
                         <div className="space-y-3">
