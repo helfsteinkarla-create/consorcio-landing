@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Calculator, Car, Home, Wrench, ArrowRight } from 'lucide-react'
+import { formatCurrencyInput, parseCurrencyInput, formatCurrency, getCurrencyPlaceholder } from '@/utils/formatters'
 
 const Simulator = () => {
   const [formData, setFormData] = useState({
@@ -40,11 +41,10 @@ const Simulator = () => {
     }))
   }
 
-  const formatCurrency = (value) => {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    }).format(value)
+  // Função para lidar com inputs de valor monetário
+  const handleCurrencyChange = (field, event) => {
+    const formattedValue = formatCurrencyInput(event.target.value);
+    handleInputChange(field, formattedValue);
   }
 
   const calcularSimulacao = () => {
@@ -57,8 +57,9 @@ const Simulator = () => {
     
     // Simular delay de processamento
     setTimeout(() => {
-      const valor = parseFloat(formData.valor)
-      const entrada = parseFloat(formData.entrada)
+      // Converter valores formatados para números
+      const valor = parseCurrencyInput(formData.valor)
+      const entrada = parseCurrencyInput(formData.entrada)
       const prazo = parseInt(formData.prazo)
       
       // Fórmulas reais de consórcio conforme especificação técnica
@@ -236,24 +237,32 @@ const Simulator = () => {
                     Valor desejado
                   </label>
                   <input
-                    type="number"
-                    placeholder="Ex: 150000"
+                    type="text"
+                    placeholder={getCurrencyPlaceholder(150000)}
                     value={formData.valor}
-                    onChange={(e) => handleInputChange('valor', e.target.value)}
+                    onChange={(e) => handleCurrencyChange('valor', e)}
                     className="w-full p-4 border border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    maxLength="15"
                   />
+                  <p className="text-sm text-gray-500 mt-1">
+                    Digite apenas números, a formatação será automática
+                  </p>
                 </div>
                 <div>
                   <label className="block text-lg font-semibold text-gray-700 mb-2">
                     Entrada disponível
                   </label>
                   <input
-                    type="number"
-                    placeholder="Ex: 30000"
+                    type="text"
+                    placeholder={getCurrencyPlaceholder(30000)}
                     value={formData.entrada}
-                    onChange={(e) => handleInputChange('entrada', e.target.value)}
+                    onChange={(e) => handleCurrencyChange('entrada', e)}
                     className="w-full p-4 border border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    maxLength="15"
                   />
+                  <p className="text-sm text-gray-500 mt-1">
+                    Digite apenas números, a formatação será automática
+                  </p>
                 </div>
               </div>
 
