@@ -11,17 +11,27 @@
   status = 200
 
 [[headers]]
-  for = "/assets/*"
+  for = "/assets/*.js"
   [headers.values]
-    Cache-Control = "max-age=31536000"
+    Content-Type = "application/javascript; charset=utf-8"
 
 [[headers]]
-  for = "*.js"
+  for = "/assets/*.mjs"
   [headers.values]
-    Content-Type = "application/javascript"
+    Content-Type = "application/javascript; charset=utf-8"
 
 [[headers]]
-  for = "*.mjs"
+  for = "/assets/*.css"
   [headers.values]
-    Content-Type = "application/javascript"
+    Content-Type = "text/css; charset=utf-8"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Content-Type = "application/javascript; charset=utf-8"
+
+[[headers]]
+  for = "/*.mjs"
+  [headers.values]
+    Content-Type = "application/javascript; charset=utf-8"
 
