@@ -40,7 +40,7 @@ Sou seu assistente virtual e estou aqui para ajudar você a encontrar a carta de
   const [isLoading, setIsLoading] = useState(false)
   const messagesEndRef = useRef(null)
 
-  const API_BASE = 'https://5000-i3bzwcccv6fr0x975y13z-ea9ccfcb.manusvm.computer/api'
+  const API_BASE = 'https://5001-izm1wsyigtkctdjp31kpo-ea9ccfcb.manusvm.computer/api'
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
