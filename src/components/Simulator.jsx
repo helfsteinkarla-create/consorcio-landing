@@ -61,36 +61,79 @@ const Simulator = () => {
       const entrada = parseFloat(formData.entrada)
       const prazo = parseInt(formData.prazo)
       
-      // Cálculos básicos de consórcio
-      const valorFinanciado = valor - entrada
-      const taxaJuros = 0.008 // 0.8% ao mês (exemplo)
-      const valorParcela = (valorFinanciado * (1 + taxaJuros * prazo)) / prazo
+      // Fórmulas reais de consórcio conforme especificação técnica
+      const valorCartaCredito = valor;
       
-      // Simular cartas compatíveis
+      // Taxas padrão por tipo de bem
+      const taxas = {
+        'imovel': { administracao: 0.12, fundoReserva: 0.02, seguro: 0.0003 },
+        'veiculo': { administracao: 0.15, fundoReserva: 0.02, seguro: 0.0004 },
+        'servicos': { administracao: 0.18, fundoReserva: 0.025, seguro: 0.0002 }
+      };
+
+      const taxa = taxas[formData.tipo] || taxas['veiculo'];
+
+      // Cálculo da parcela mensal conforme fórmula oficial:
+      // Parcela = (Valor/Prazo) + (Valor*TaxaAdmin/Prazo) + (Valor*FundoReserva/Prazo) + SeguroMensal
+      const fundoComumMensal = valorCartaCredito / prazo;
+      const taxaAdministracaoMensal = (valorCartaCredito * taxa.administracao) / prazo;
+      const fundoReservaMensal = (valorCartaCredito * taxa.fundoReserva) / prazo;
+      const seguroMensal = valorCartaCredito * taxa.seguro;
+
+      const valorParcela = fundoComumMensal + taxaAdministracaoMensal + fundoReservaMensal + seguroMensal;
+
+      // Custo total do consórcio
+      const custoTotalAdministracao = valorCartaCredito * taxa.administracao;
+      const custoTotalFundoReserva = valorCartaCredito * taxa.fundoReserva;
+      const custoTotalSeguro = seguroMensal * prazo;
+      const custoTotal = valorCartaCredito + custoTotalAdministracao + custoTotalFundoReserva + custoTotalSeguro;
+      
+      // Simular cartas compatíveis baseadas nos cálculos reais
       const cartasCompativeis = [
         {
           codigo: '#2721',
-          credito: valor * 0.9,
-          entrada: entrada * 0.95,
-          parcelas: Math.floor(prazo * 0.8),
-          valorParcela: valorParcela * 0.9,
-          disponivel: true
+          credito: valorCartaCredito,
+          entrada: entrada,
+          parcelas: prazo,
+          valorParcela: valorParcela,
+          disponivel: true,
+          detalhes: {
+            fundoComum: fundoComumMensal,
+            taxaAdmin: taxaAdministracaoMensal,
+            fundoReserva: fundoReservaMensal,
+            seguro: seguroMensal,
+            custoTotal: custoTotal
+          }
         },
         {
           codigo: '#2767',
-          credito: valor * 1.1,
-          entrada: entrada * 1.05,
-          parcelas: Math.floor(prazo * 1.2),
-          valorParcela: valorParcela * 0.85,
-          disponivel: true
+          credito: valorCartaCredito * 0.9,
+          entrada: entrada * 0.95,
+          parcelas: Math.max(prazo - 6, 12),
+          valorParcela: valorParcela * 0.9,
+          disponivel: true,
+          detalhes: {
+            fundoComum: (valorCartaCredito * 0.9) / Math.max(prazo - 6, 12),
+            taxaAdmin: ((valorCartaCredito * 0.9) * taxa.administracao) / Math.max(prazo - 6, 12),
+            fundoReserva: ((valorCartaCredito * 0.9) * taxa.fundoReserva) / Math.max(prazo - 6, 12),
+            seguro: (valorCartaCredito * 0.9) * taxa.seguro,
+            custoTotal: custoTotal * 0.9
+          }
         },
         {
           codigo: '#2764',
-          credito: valor * 1.05,
-          entrada: entrada * 1.1,
-          parcelas: Math.floor(prazo * 1.1),
+          credito: valorCartaCredito * 1.1,
+          entrada: entrada * 1.05,
+          parcelas: prazo + 12,
           valorParcela: valorParcela * 0.95,
-          disponivel: false
+          disponivel: false,
+          detalhes: {
+            fundoComum: (valorCartaCredito * 1.1) / (prazo + 12),
+            taxaAdmin: ((valorCartaCredito * 1.1) * taxa.administracao) / (prazo + 12),
+            fundoReserva: ((valorCartaCredito * 1.1) * taxa.fundoReserva) / (prazo + 12),
+            seguro: (valorCartaCredito * 1.1) * taxa.seguro,
+            custoTotal: custoTotal * 1.1
+          }
         }
       ]
 
@@ -99,8 +142,17 @@ const Simulator = () => {
         entradaPaga: entrada,
         prazoEscolhido: prazo,
         valorParcela: valorParcela,
-        totalJuros: valorParcela * prazo - valorFinanciado,
-        cartasCompativeis
+        totalJuros: custoTotal - valorCartaCredito,
+        cartasCompativeis,
+        detalhesCalculo: {
+          fundoComum: fundoComumMensal,
+          taxaAdministracao: taxaAdministracaoMensal,
+          fundoReserva: fundoReservaMensal,
+          seguro: seguroMensal,
+          taxaAdminPercent: (taxa.administracao * 100).toFixed(1),
+          fundoReservaPercent: (taxa.fundoReserva * 100).toFixed(1),
+          custoTotal: custoTotal
+        }
       })
       
       setLoading(false)
@@ -242,6 +294,27 @@ const Simulator = () => {
                     Resultado da Simulação
                   </h3>
                   
+                  {/* Aviso importante */}
+                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+                    <div className="flex items-start">
+                      <div className="flex-shrink-0">
+                        <svg className="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <div className="ml-3">
+                        <h4 className="text-sm font-medium text-yellow-800">
+                          Importante - Simulação Aproximada
+                        </h4>
+                        <p className="mt-1 text-sm text-yellow-700">
+                          Os valores apresentados são aproximados e têm caráter meramente informativo. 
+                          Para obter valores reais e condições específicas, preencha o formulário de contato 
+                          e nossa equipe especializada entrará em contato com você.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
                   {/* Resumo */}
                   <div className="grid md:grid-cols-4 gap-4 mb-8">
                     <div className="bg-blue-50 p-4 rounded-lg text-center">
@@ -269,6 +342,49 @@ const Simulator = () => {
                       </div>
                     </div>
                   </div>
+
+                  {/* Detalhamento dos cálculos */}
+                  {resultado.detalhesCalculo && (
+                    <div className="bg-gray-50 rounded-lg p-6 mb-8">
+                      <h4 className="text-lg font-bold text-gray-800 mb-4">
+                        Composição da Parcela Mensal
+                      </h4>
+                      <div className="grid md:grid-cols-2 gap-6">
+                        <div className="space-y-3">
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">Fundo Comum:</span>
+                            <span className="font-semibold">{formatCurrency(resultado.detalhesCalculo.fundoComum)}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">Taxa de Administração ({resultado.detalhesCalculo.taxaAdminPercent}%):</span>
+                            <span className="font-semibold">{formatCurrency(resultado.detalhesCalculo.taxaAdministracao)}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">Fundo de Reserva ({resultado.detalhesCalculo.fundoReservaPercent}%):</span>
+                            <span className="font-semibold">{formatCurrency(resultado.detalhesCalculo.fundoReserva)}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">Seguro:</span>
+                            <span className="font-semibold">{formatCurrency(resultado.detalhesCalculo.seguro)}</span>
+                          </div>
+                        </div>
+                        <div className="space-y-3">
+                          <div className="flex justify-between border-t pt-3">
+                            <span className="text-lg font-bold text-gray-800">Total da Parcela:</span>
+                            <span className="text-lg font-bold text-blue-600">{formatCurrency(resultado.valorParcela)}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">Custo Total do Consórcio:</span>
+                            <span className="font-semibold">{formatCurrency(resultado.detalhesCalculo.custoTotal)}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">Total de Taxas e Seguros:</span>
+                            <span className="font-semibold text-red-600">{formatCurrency(resultado.totalJuros)}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
                   {/* Cartas compatíveis */}
                   <h4 className="text-xl font-bold text-gray-800 mb-4">
@@ -328,13 +444,43 @@ const Simulator = () => {
                     ))}
                   </div>
 
+                  {/* Termo de uso */}
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mt-8">
+                    <h4 className="text-lg font-bold text-blue-800 mb-3">
+                      Termos de Uso da Simulação
+                    </h4>
+                    <div className="text-sm text-blue-700 space-y-2">
+                      <p>
+                        <strong>1. Caráter Informativo:</strong> Esta simulação tem caráter meramente informativo e educativo, 
+                        baseada em fórmulas padrão do mercado de consórcios.
+                      </p>
+                      <p>
+                        <strong>2. Valores Aproximados:</strong> Os valores apresentados são aproximados e podem variar 
+                        conforme as condições específicas de cada administradora e tipo de bem.
+                      </p>
+                      <p>
+                        <strong>3. Não Constitui Proposta:</strong> Esta simulação não constitui proposta comercial ou 
+                        compromisso de contratação por parte da Atma Seguros e Consórcios.
+                      </p>
+                      <p>
+                        <strong>4. Valores Reais:</strong> Para obter valores reais, condições específicas e propostas 
+                        comerciais, preencha o formulário de contato. Nossa equipe especializada entrará em contato 
+                        com informações precisas e atualizadas.
+                      </p>
+                      <p>
+                        <strong>5. Variações:</strong> Os valores podem sofrer alterações devido a reajustes anuais, 
+                        mudanças nas taxas de administração, seguros e outras condições contratuais.
+                      </p>
+                    </div>
+                  </div>
+
                   {/* CTA final */}
                   <div className="text-center mt-8 p-6 bg-blue-50 rounded-lg">
                     <h4 className="text-xl font-bold text-gray-800 mb-2">
                       Gostou das opções?
                     </h4>
                     <p className="text-gray-600 mb-4">
-                      Fale conosco agora e garante sua carta contemplada!
+                      Fale conosco agora e garante sua carta contemplada com valores reais!
                     </p>
                     <Button
                       onClick={() => handleWhatsAppContact()}
