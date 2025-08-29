@@ -5,7 +5,8 @@ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(),tailwindcss()],
+  plugins: [react(), tailwindcss()],
+  base: '/consorcio-landing/',
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -13,8 +14,14 @@ export default defineConfig({
   },
   server: {
     host: '0.0.0.0',
+    allowedHosts: 'all',
     hmr: {
       port: 24678,
     },
   },
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    sourcemap: false,
+  }
 })
