@@ -5,7 +5,9 @@ import Simulator from './components/Simulator'
 import ContactForm from './components/ContactForm'
 import AdminRoute from './components/AdminRoute'
 import Footer from './components/Footer'
+import { motion } from 'framer-motion'
 import './App.css'
+import './styles/animations.css'
 
 function App() {
   const [currentRoute, setCurrentRoute] = useState('home')
@@ -39,21 +41,70 @@ function App() {
 
   // Renderizar landing page normal
   return (
-    <div className="min-h-screen">
+    <motion.div 
+      className="min-h-screen"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <Header />
       <main>
         <Hero />
         <Simulator />
         
-        {/* Placeholder sections for future components */}
-        <section id="oportunidades" className="py-16 bg-white">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold text-gray-800 mb-8">
-              Oportunidades Disponíveis
-            </h2>
-            <p className="text-gray-600 mb-8">
-              Em breve: Grid de cartas contempladas
-            </p>
+        {/* Seção de Oportunidades Modernizada */}
+        <section id="oportunidades" className="py-20 bg-gradient-to-br from-white to-gray-50 relative overflow-hidden">
+          <div className="absolute inset-0">
+            <div className="absolute top-10 left-10 w-64 h-64 bg-blue-100/50 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-10 right-10 w-80 h-80 bg-purple-100/50 rounded-full blur-3xl"></div>
+          </div>
+          
+          <div className="container mx-auto px-4 text-center relative">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-4xl lg:text-6xl font-bold text-gray-800 mb-6">
+                <span className="block">Oportunidades</span>
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+                  Disponíveis
+                </span>
+              </h2>
+              <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
+                Explore nossa seleção de cartas contempladas e encontre a oportunidade perfeita para você
+              </p>
+              
+              <motion.div 
+                className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                viewport={{ once: true }}
+              >
+                {[
+                  { title: 'Imóveis', count: '500+', icon: '🏠' },
+                  { title: 'Veículos', count: '300+', icon: '🚗' },
+                  { title: 'Serviços', count: '200+', icon: '🔧' }
+                ].map((item, index) => (
+                  <motion.div
+                    key={item.title}
+                    className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.4 + (index * 0.1) }}
+                    whileHover={{ scale: 1.05 }}
+                    viewport={{ once: true }}
+                  >
+                    <div className="text-4xl mb-4">{item.icon}</div>
+                    <h3 className="text-2xl font-bold text-gray-800 mb-2">{item.title}</h3>
+                    <p className="text-3xl font-bold text-blue-600 mb-2">{item.count}</p>
+                    <p className="text-gray-600">cartas disponíveis</p>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </motion.div>
           </div>
         </section>
 
@@ -71,7 +122,7 @@ function App() {
           Área Administrativa
         </a>
       </div>
-    </div>
+    </motion.div>
   )
 }
 

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { 
@@ -11,8 +11,13 @@ import {
   Car,
   Wrench,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
+  Heart,
+  Sparkles,
+  MessageCircle
 } from 'lucide-react'
+import { motion } from 'framer-motion'
+import ScrollAnimation from './ScrollAnimation'
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -180,26 +185,68 @@ Aguardo retorno! 😊`
   }
 
   return (
-    <section id="contato" className="py-16 bg-gradient-to-br from-blue-50 to-purple-50">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">
-            Fale Conosco
-          </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Preencha o formulário abaixo e receba atendimento personalizado via WhatsApp
-          </p>
-        </div>
-
-        <Card className="max-w-2xl mx-auto shadow-xl">
-          <CardHeader className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-t-lg">
-            <CardTitle className="text-2xl text-center">
-              Formulário de Interesse
-            </CardTitle>
-            <p className="text-center text-blue-100">
-              Seus dados serão enviados diretamente para nosso WhatsApp
+    <section id="contato" className="py-20 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 relative overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-20 w-64 h-64 bg-blue-300/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-20 w-80 h-80 bg-purple-300/20 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-pink-300/10 rounded-full blur-3xl"></div>
+      </div>
+      
+      <div className="container mx-auto px-4 relative">
+        <ScrollAnimation direction="down" delay={0.2}>
+          <div className="text-center mb-16">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6 }}
+              className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 px-6 py-3 rounded-full text-sm font-medium mb-6 border border-blue-200"
+            >
+              <Heart className="w-4 h-4 text-red-500" />
+              <span>Atendimento Personalizado</span>
+              <Sparkles className="w-4 h-4 text-yellow-500" />
+            </motion.div>
+            
+            <h2 className="text-4xl lg:text-6xl font-bold text-gray-800 mb-6">
+              <span className="block">Fale</span>
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+                Conosco
+              </span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Preencha o formulário abaixo e receba atendimento personalizado via WhatsApp. 
+              Nossa equipe está pronta para ajudar você a realizar seus sonhos!
             </p>
-          </CardHeader>
+          </div>
+        </ScrollAnimation>
+
+        <ScrollAnimation direction="up" delay={0.4}>
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Card className="max-w-3xl mx-auto shadow-2xl border-0 bg-white/90 backdrop-blur-sm overflow-hidden">
+              <CardHeader className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white relative overflow-hidden">
+                <div className="absolute inset-0 bg-black/10"></div>
+                <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
+                <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-12 -translate-x-12"></div>
+                
+                <CardTitle className="text-2xl lg:text-3xl text-center font-bold relative z-10">
+                  <motion.div className="flex items-center justify-center space-x-3">
+                    <MessageCircle className="w-8 h-8" />
+                    <span>Formulário de Interesse</span>
+                    <motion.div
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
+                      <Heart className="w-6 h-6 text-red-300" />
+                    </motion.div>
+                  </motion.div>
+                </CardTitle>
+                <p className="text-center text-blue-100 mt-2 relative z-10">
+                  Seus dados serão enviados diretamente para nosso WhatsApp
+                </p>
+              </CardHeader>
           
           <CardContent className="p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -371,6 +418,8 @@ Aguardo retorno! 😊`
             </Card>
           </div>
         </div>
+            </motion.div>
+          </ScrollAnimation>
       </div>
     </section>
   )

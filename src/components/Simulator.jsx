@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Calculator, Car, Home, Wrench, ArrowRight } from 'lucide-react'
+import { Calculator, Car, Home, Wrench, ArrowRight, Sparkles, TrendingUp, DollarSign } from 'lucide-react'
+import { motion } from 'framer-motion'
+import ScrollAnimation from './ScrollAnimation'
 import { formatCurrencyInput, parseCurrencyInput, formatCurrency, getCurrencyPlaceholder } from '@/utils/formatters'
 
 const Simulator = () => {
@@ -181,90 +183,166 @@ const Simulator = () => {
   }
 
   return (
-    <section id="simulador" className="py-16 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">
-            Simulador de Consórcios
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Descubra as melhores opções de consórcio contemplado para você. 
-            Simule agora e encontre a carta ideal para realizar seus sonhos.
-          </p>
-        </div>
+    <section id="simulador" className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 relative overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0">
+        <div className="absolute top-10 right-10 w-64 h-64 bg-blue-200/30 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-10 left-10 w-80 h-80 bg-purple-200/30 rounded-full blur-3xl"></div>
+      </div>
+      
+      <div className="container mx-auto px-4 relative">
+        <ScrollAnimation direction="down" delay={0.2}>
+          <div className="text-center mb-16">
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="inline-flex items-center space-x-2 bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium mb-6"
+            >
+              <Sparkles className="w-4 h-4" />
+              <span>Simulação 100% Gratuita</span>
+            </motion.div>
+            
+            <h2 className="text-4xl lg:text-6xl font-bold text-gray-800 mb-6">
+              <span className="block">Simulador de</span>
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+                Consórcios
+              </span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Descubra as melhores opções de consórcio contemplado para você. 
+              Simule agora e encontre a carta ideal para realizar seus sonhos.
+            </p>
+          </div>
+        </ScrollAnimation>
 
-        <div className="max-w-4xl mx-auto">
-          <Card className="shadow-xl">
-            <CardHeader className="bg-blue-600 text-white">
-              <CardTitle className="flex items-center text-2xl">
-                <Calculator className="w-8 h-8 mr-3" />
-                Simulação Gratuita
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-8">
-              {/* Seleção do tipo de bem */}
-              <div className="mb-8">
-                <label className="block text-lg font-semibold text-gray-700 mb-4">
-                  Qual seu objetivo?
-                </label>
-                <div className="grid md:grid-cols-3 gap-4">
-                  {tiposBem.map((tipo) => {
-                    const Icon = tipo.icon
-                    return (
-                      <button
-                        key={tipo.id}
-                        onClick={() => handleInputChange('tipo', tipo.id)}
-                        className={`p-6 rounded-lg border-2 transition-all ${
-                          formData.tipo === tipo.id
-                            ? 'border-blue-500 bg-blue-50'
-                            : 'border-gray-200 hover:border-gray-300'
-                        }`}
+        <ScrollAnimation direction="up" delay={0.4}>
+          <div className="max-w-5xl mx-auto">
+            <motion.div
+              whileHover={{ scale: 1.01 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm overflow-hidden">
+                <CardHeader className="bg-gradient-to-r from-blue-600 via-blue-700 to-purple-600 text-white relative overflow-hidden">
+                  <div className="absolute inset-0 bg-black/10"></div>
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
+                  <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-12 -translate-x-12"></div>
+                  
+                  <CardTitle className="flex items-center text-2xl lg:text-3xl font-bold relative z-10">
+                    <motion.div
+                      animate={{ rotate: [0, 360] }}
+                      transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                      className="mr-4"
+                    >
+                      <Calculator className="w-8 h-8 lg:w-10 lg:h-10" />
+                    </motion.div>
+                    <span>Simulação Gratuita</span>
+                    <motion.div
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                      className="ml-3"
+                    >
+                      <Sparkles className="w-6 h-6 text-yellow-300" />
+                    </motion.div>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-8 lg:p-12">
+                  {/* Seleção do tipo de bem */}
+                  <ScrollAnimation direction="up" delay={0.6}>
+                    <div className="mb-10">
+                      <label className="block text-xl font-bold text-gray-800 mb-6 text-center">
+                        Qual seu objetivo?
+                      </label>
+                      <div className="grid md:grid-cols-3 gap-6">
+                        {tiposBem.map((tipo, index) => {
+                          const Icon = tipo.icon
+                          const gradients = [
+                            'from-blue-500 to-blue-600',
+                            'from-green-500 to-green-600', 
+                            'from-purple-500 to-purple-600'
+                          ]
+                          return (
+                            <motion.button
+                              key={tipo.id}
+                              onClick={() => handleInputChange('tipo', tipo.id)}
+                              className={`p-8 rounded-2xl border-2 transition-all duration-300 ${
+                                formData.tipo === tipo.id
+                                  ? 'border-blue-500 bg-gradient-to-br from-blue-50 to-blue-100 shadow-xl scale-105'
+                                  : 'border-gray-200 hover:border-blue-300 bg-white hover:shadow-lg'
+                              }`}
+                              initial={{ opacity: 0, y: 20 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ duration: 0.5, delay: 0.8 + (index * 0.1) }}
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              <motion.div 
+                                className={`w-16 h-16 bg-gradient-to-br ${gradients[index]} rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg`}
+                                whileHover={{ rotate: 5 }}
+                                transition={{ duration: 0.2 }}
+                              >
+                                <Icon className="w-8 h-8 text-white" />
+                              </motion.div>
+                              <span className="font-bold text-gray-800 text-lg">{tipo.label}</span>
+                            </motion.button>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  </ScrollAnimation>
+
+                  {/* Campos de entrada */}
+                  <ScrollAnimation direction="up" delay={0.8}>
+                    <div className="grid md:grid-cols-2 gap-8 mb-10">
+                      <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5, delay: 1.0 }}
                       >
-                        <div className={`w-12 h-12 ${tipo.color} rounded-lg flex items-center justify-center mx-auto mb-3`}>
-                          <Icon className="w-6 h-6 text-white" />
-                        </div>
-                        <span className="font-semibold text-gray-700">{tipo.label}</span>
-                      </button>
-                    )
-                  })}
-                </div>
-              </div>
-
-              {/* Campos de entrada */}
-              <div className="grid md:grid-cols-2 gap-6 mb-8">
-                <div>
-                  <label className="block text-lg font-semibold text-gray-700 mb-2">
-                    Valor desejado
-                  </label>
-                  <input
-                    type="text"
-                    placeholder={getCurrencyPlaceholder(150000)}
-                    value={formData.valor}
-                    onChange={(e) => handleCurrencyChange('valor', e)}
-                    className="w-full p-4 border border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    maxLength="15"
-                  />
-                  <p className="text-sm text-gray-500 mt-1">
-                    Digite apenas números, a formatação será automática
-                  </p>
-                </div>
-                <div>
-                  <label className="block text-lg font-semibold text-gray-700 mb-2">
-                    Entrada disponível
-                  </label>
-                  <input
-                    type="text"
-                    placeholder={getCurrencyPlaceholder(30000)}
-                    value={formData.entrada}
-                    onChange={(e) => handleCurrencyChange('entrada', e)}
-                    className="w-full p-4 border border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    maxLength="15"
-                  />
-                  <p className="text-sm text-gray-500 mt-1">
-                    Digite apenas números, a formatação será automática
-                  </p>
-                </div>
-              </div>
+                        <label className="flex items-center text-lg font-bold text-gray-800 mb-3">
+                          <DollarSign className="w-5 h-5 mr-2 text-green-600" />
+                          Valor desejado
+                        </label>
+                        <motion.input
+                          type="text"
+                          placeholder={getCurrencyPlaceholder(150000)}
+                          value={formData.valor}
+                          onChange={(e) => handleCurrencyChange('valor', e)}
+                          className="w-full p-4 border-2 border-gray-200 rounded-xl text-lg focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 bg-gray-50 focus:bg-white"
+                          maxLength="15"
+                          whileFocus={{ scale: 1.02 }}
+                        />
+                        <p className="text-sm text-gray-500 mt-2 flex items-center">
+                          <Sparkles className="w-4 h-4 mr-1" />
+                          Digite apenas números, formatação automática
+                        </p>
+                      </motion.div>
+                      
+                      <motion.div
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5, delay: 1.1 }}
+                      >
+                        <label className="flex items-center text-lg font-bold text-gray-800 mb-3">
+                          <TrendingUp className="w-5 h-5 mr-2 text-blue-600" />
+                          Entrada disponível
+                        </label>
+                        <motion.input
+                          type="text"
+                          placeholder={getCurrencyPlaceholder(30000)}
+                          value={formData.entrada}
+                          onChange={(e) => handleCurrencyChange('entrada', e)}
+                          className="w-full p-4 border-2 border-gray-200 rounded-xl text-lg focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 bg-gray-50 focus:bg-white"
+                          maxLength="15"
+                          whileFocus={{ scale: 1.02 }}
+                        />
+                        <p className="text-sm text-gray-500 mt-2 flex items-center">
+                          <Sparkles className="w-4 h-4 mr-1" />
+                          Digite apenas números, formatação automática
+                        </p>
+                      </motion.div>
+                    </div>
+                  </ScrollAnimation>
 
               <div className="mb-8">
                 <label className="block text-lg font-semibold text-gray-700 mb-2">
@@ -500,9 +578,11 @@ const Simulator = () => {
                   </div>
                 </div>
               )}
-            </CardContent>
-          </Card>
-        </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </div>
+        </ScrollAnimation>
       </div>
     </section>
   )
