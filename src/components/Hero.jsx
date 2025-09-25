@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import { CheckCircle, ArrowRight, Star, Play, Shield, Zap, TrendingUp } from 'lucide-react'
 import { motion } from 'framer-motion'
 import ScrollAnimation from './ScrollAnimation'
+import heroBackground from '../assets/hero-background.png'
 
 const Hero = () => {
   const benefits = [
@@ -20,12 +21,23 @@ const Hero = () => {
   }
 
   return (
-    <section id="inicio" className="relative min-h-screen bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white overflow-hidden">
-      {/* Background Effects */}
+    <section id="inicio" className="relative min-h-screen text-white overflow-hidden">
+      {/* Background Image */}
       <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-blue-400/10 to-purple-400/10 rounded-full blur-3xl"></div>
+        <img 
+          src={heroBackground} 
+          alt="Casa dos sonhos - Consórcio Atma"
+          className="w-full h-full object-cover"
+        />
+        {/* Overlay gradiente para melhor legibilidade do texto */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
+      </div>
+      
+      {/* Background Effects Sutis */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
       
       <div className="relative container mx-auto px-4 py-16 lg:py-24">
@@ -73,7 +85,7 @@ const Hero = () => {
               </ScrollAnimation>
               
               <ScrollAnimation direction="left" delay={0.6}>
-                <p className="text-xl lg:text-2xl text-blue-100 leading-relaxed max-w-2xl">
+                <p className="text-xl lg:text-2xl text-gray-100 leading-relaxed max-w-2xl">
                   Cartas de consórcio contempladas com crédito liberado na hora. 
                   Compre seu imóvel, veículo ou realize seus projetos sem burocracia.
                 </p>
@@ -100,7 +112,7 @@ const Hero = () => {
                       }}
                     >
                       <Icon className="w-5 h-5 text-green-400 flex-shrink-0" />
-                      <span className="text-blue-100">{benefit}</span>
+                      <span className="text-gray-100">{benefit}</span>
                     </motion.div>
                   )
                 })}
@@ -163,7 +175,7 @@ const Hero = () => {
                   >
                     1000+
                   </motion.div>
-                  <div className="text-sm text-blue-200 mt-1">Cartas Disponíveis</div>
+                  <div className="text-sm text-gray-200 mt-1">Cartas Disponíveis</div>
                 </motion.div>
                 
                 <div className="w-px h-12 bg-white/20 mx-4"></div>
@@ -181,7 +193,7 @@ const Hero = () => {
                   >
                     5000+
                   </motion.div>
-                  <div className="text-sm text-blue-200 mt-1">Clientes Satisfeitos</div>
+                  <div className="text-sm text-gray-200 mt-1">Clientes Satisfeitos</div>
                 </motion.div>
                 
                 <div className="w-px h-12 bg-white/20 mx-4"></div>
@@ -199,7 +211,7 @@ const Hero = () => {
                   >
                     98%
                   </motion.div>
-                  <div className="text-sm text-blue-200 mt-1">Taxa de Aprovação</div>
+                  <div className="text-sm text-gray-200 mt-1">Taxa de Aprovação</div>
                 </motion.div>
               </div>
             </ScrollAnimation>
@@ -207,7 +219,7 @@ const Hero = () => {
             {/* Instagram Links */}
             <ScrollAnimation direction="up" delay={1.4}>
               <div className="pt-6 border-t border-white/20">
-                <p className="text-blue-100 text-sm mb-3">Siga-nos no Instagram:</p>
+                <p className="text-gray-100 text-sm mb-3">Siga-nos no Instagram:</p>
                 <div className="flex flex-wrap gap-2">
                   {[
                     { handle: '@atmaseguros', url: 'https://instagram.com/atmaseguros' },
