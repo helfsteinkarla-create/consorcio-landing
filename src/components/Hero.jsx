@@ -6,10 +6,10 @@ import heroBackground from '../assets/hero-background.png'
 
 const Hero = () => {
   const benefits = [
-    "Crédito liberado imediatamente",
-    "Sem análise de crédito rigorosa", 
-    "Parcelas que cabem no seu bolso",
-    "Mais de 1000 cartas disponíveis"
+    "Realize seus sonhos com segurança",
+    "Atendimento personalizado e especializado", 
+    "Soluções financeiras inteligentes",
+    "Experiência comprovada no mercado"
   ]
 
   const scrollToSimulator = () => {

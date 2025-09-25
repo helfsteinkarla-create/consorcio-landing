@@ -3,7 +3,7 @@ import Header from './components/Header'
 import Hero from './components/Hero'
 import Simulator from './components/Simulator'
 import ContactForm from './components/ContactForm'
-import InstagramPreview from './components/InstagramPreview'
+import InstagramReal from './components/InstagramReal'
 import AdminRoute from './components/AdminRoute'
 import Footer from './components/Footer'
 import { motion } from 'framer-motion'
@@ -51,6 +51,10 @@ function App() {
       <Header />
       <main>
         <Hero />
+        
+        {/* Formulário de Contato */}
+        <ContactForm />
+        
         <Simulator />
         
         {/* Seção de Oportunidades Modernizada */}
@@ -109,11 +113,8 @@ function App() {
           </div>
         </section>
 
-        {/* Instagram Preview */}
-        <InstagramPreview />
-
-        {/* Formulário de Contato */}
-        <ContactForm />
+        {/* Instagram Real */}
+        <InstagramReal />
       </main>
       <Footer />
       
