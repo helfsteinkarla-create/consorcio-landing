@@ -4,7 +4,6 @@ import Hero from './components/Hero'
 import Simulator from './components/Simulator'
 import ContactForm from './components/ContactForm'
 import AdminRoute from './components/AdminRoute'
-import Chatbot from './components/Chatbot'
 import Footer from './components/Footer'
 import './App.css'
 
@@ -62,9 +61,6 @@ function App() {
         <ContactForm />
       </main>
       <Footer />
-      
-      {/* Chatbot */}
-      <Chatbot />
       
       {/* Link discreto para admin no footer */}
       <div className="text-center py-2 bg-gray-900">

@@ -23,13 +23,6 @@ Uma landing page completa para venda de consórcios contemplados com sistema de 
 - Estatísticas em tempo real
 - API REST completa
 
-### ✅ Chatbot Inteligente
-- Integração com Google Gemini AI
-- Respostas especializadas em consórcios
-- Sistema de fallback offline
-- Interface moderna e responsiva
-- Direcionamento automático para WhatsApp
-
 ### ✅ Formulário Qualificador
 - Coleta dados: Nome, Objetivo, Email, WhatsApp
 - Validação completa de campos
@@ -53,7 +46,6 @@ Uma landing page completa para venda de consórcios contemplados com sistema de 
 - **Requests** - Integração com APIs externas
 
 ### Integrações
-- **Google Gemini AI** - Chatbot inteligente
 - **WhatsApp API** - Integração de mensagens
 - **GitHub Actions** - Deploy automatizado
 
@@ -67,7 +59,6 @@ consorcio-landing/
 │   │   ├── Header.jsx       # Cabeçalho da página
 │   │   ├── Hero.jsx         # Seção principal
 │   │   ├── Simulator.jsx    # Simulador de consórcios
-│   │   ├── Chatbot.jsx      # Chat inteligente
 │   │   ├── ContactForm.jsx  # Formulário de contato
 │   │   ├── AdminPanel.jsx   # Painel administrativo
 │   │   └── Footer.jsx       # Rodapé
@@ -111,20 +102,6 @@ pip install flask flask-cors requests
 # Executar servidor
 python src/main.py
 ```
-
-## 🔧 Configuração
-
-### Variáveis de Ambiente
-Crie um arquivo `.env` na raiz do projeto backend:
-
-```env
-GEMINI_API_KEY=sua_chave_da_api_gemini
-```
-
-### API Gemini
-1. Acesse [Google AI Studio](https://aistudio.google.com/)
-2. Crie uma nova API Key
-3. Configure a chave no arquivo de ambiente
 
 ## 📱 Integração WhatsApp
 
@@ -192,17 +169,12 @@ git push heroku main
 - `GET /api/cartas/buscar` - Buscar cartas compatíveis
 - `GET /api/cartas/estatisticas` - Estatísticas
 
-### Chatbot
-- `POST /api/chat` - Enviar mensagem
-- `GET /api/chat/health` - Status do chatbot
-
 ## 📈 Métricas e Analytics
 
 ### Conversões Rastreadas
 - Cliques no WhatsApp
 - Envios de formulário
 - Simulações realizadas
-- Interações com chatbot
 
 ### Integração com Google Analytics
 ```html
@@ -222,11 +194,6 @@ git push heroku main
 ## 🐛 Troubleshooting
 
 ### Problemas Comuns
-
-**Chatbot não responde:**
-- Verifique a chave da API Gemini
-- Confirme se o backend está rodando
-- Verifique logs do console
 
 **Formulário não envia:**
 - Confirme validação de campos
