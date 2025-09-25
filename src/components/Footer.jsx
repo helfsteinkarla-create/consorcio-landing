@@ -10,8 +10,16 @@ const Footer = () => {
     window.open(url, '_blank')
   }
 
-  const handleInstagramClick = () => {
+  const handleInstagramAtma = () => {
     window.open('https://instagram.com/atmaseguros', '_blank')
+  }
+
+  const handleInstagramKarla = () => {
+    window.open('https://instagram.com/karlahelfstein', '_blank')
+  }
+
+  const handleInstagramCarlos = () => {
+    window.open('https://instagram.com/carlos.atma', '_blank')
   }
 
   const handleFacebookClick = () => {
@@ -33,23 +41,47 @@ const Footer = () => {
               Especialistas em consórcios contemplados. Realizamos sonhos com transparência, 
               agilidade e as melhores condições do mercado.
             </p>
-            <div className="flex space-x-4">
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                className="p-2 hover:bg-blue-600"
-                onClick={handleFacebookClick}
-              >
-                <Facebook className="w-5 h-5" />
-              </Button>
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                className="p-2 hover:bg-blue-600"
-                onClick={handleInstagramClick}
-              >
-                <Instagram className="w-5 h-5" />
-              </Button>
+            <div className="space-y-3">
+              <h4 className="text-sm font-semibold text-gray-200">Siga-nos no Instagram:</h4>
+              <div className="space-y-2">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="w-full justify-start p-2 hover:bg-blue-600 text-left"
+                  onClick={handleInstagramAtma}
+                >
+                  <Instagram className="w-4 h-4 mr-2" />
+                  @atmaseguros
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="w-full justify-start p-2 hover:bg-blue-600 text-left"
+                  onClick={handleInstagramKarla}
+                >
+                  <Instagram className="w-4 h-4 mr-2" />
+                  @karlahelfstein
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="w-full justify-start p-2 hover:bg-blue-600 text-left"
+                  onClick={handleInstagramCarlos}
+                >
+                  <Instagram className="w-4 h-4 mr-2" />
+                  @carlos.atma
+                </Button>
+              </div>
+              <div className="pt-2">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="p-2 hover:bg-blue-600"
+                  onClick={handleFacebookClick}
+                >
+                  <Facebook className="w-5 h-5" />
+                </Button>
+              </div>
             </div>
           </div>
 

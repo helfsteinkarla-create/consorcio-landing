@@ -86,6 +86,37 @@ const Hero = () => {
                 <div className="text-sm text-blue-200">Taxa de Aprovação</div>
               </div>
             </div>
+
+            {/* Instagram Links */}
+            <div className="pt-6 border-t border-white/20">
+              <p className="text-blue-100 text-sm mb-3">Siga-nos no Instagram:</p>
+              <div className="flex flex-wrap gap-2">
+                <a 
+                  href="https://instagram.com/atmaseguros" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-3 py-2 bg-white/10 hover:bg-white/20 rounded-full text-sm transition-colors"
+                >
+                  @atmaseguros
+                </a>
+                <a 
+                  href="https://instagram.com/karlahelfstein" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-3 py-2 bg-white/10 hover:bg-white/20 rounded-full text-sm transition-colors"
+                >
+                  @karlahelfstein
+                </a>
+                <a 
+                  href="https://instagram.com/carlos.atma" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-3 py-2 bg-white/10 hover:bg-white/20 rounded-full text-sm transition-colors"
+                >
+                  @carlos.atma
+                </a>
+              </div>
+            </div>
           </div>
 
           {/* Vídeo YouTube */}
