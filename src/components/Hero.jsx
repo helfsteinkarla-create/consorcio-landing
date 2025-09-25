@@ -88,33 +88,39 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Visual/Image */}
+          {/* Vídeo YouTube */}
           <div className="relative">
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
-              <div className="space-y-6">
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20">
+              <div className="space-y-4">
                 <div className="text-center">
-                  <h3 className="text-2xl font-bold mb-2">Consulta Gratuita</h3>
-                  <p className="text-blue-100">Descubra as melhores oportunidades para você</p>
+                  <h3 className="text-2xl font-bold mb-2">Veja Como Funciona</h3>
+                  <p className="text-blue-100">Entenda o processo de consórcio contemplado</p>
                 </div>
                 
-                <div className="space-y-4">
-                  <div className="bg-white/20 rounded-lg p-4">
-                    <div className="flex justify-between items-center">
-                      <span>Imóveis</span>
-                      <span className="font-bold">R$ 50k - R$ 800k</span>
-                    </div>
+                {/* YouTube Video Embed */}
+                <div className="relative w-full" style={{ paddingBottom: '177.78%' }}>
+                  <iframe
+                    className="absolute top-0 left-0 w-full h-full rounded-lg"
+                    src="https://www.youtube.com/embed/adv9mw3oJ7Q"
+                    title="Como funciona o consórcio contemplado - Atma"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+
+                <div className="grid grid-cols-3 gap-2 text-center text-sm">
+                  <div className="bg-white/20 rounded-lg p-2">
+                    <div className="font-bold">Imóveis</div>
+                    <div className="text-xs text-blue-200">R$ 50k - R$ 800k</div>
                   </div>
-                  <div className="bg-white/20 rounded-lg p-4">
-                    <div className="flex justify-between items-center">
-                      <span>Veículos</span>
-                      <span className="font-bold">R$ 20k - R$ 200k</span>
-                    </div>
+                  <div className="bg-white/20 rounded-lg p-2">
+                    <div className="font-bold">Veículos</div>
+                    <div className="text-xs text-blue-200">R$ 20k - R$ 200k</div>
                   </div>
-                  <div className="bg-white/20 rounded-lg p-4">
-                    <div className="flex justify-between items-center">
-                      <span>Serviços</span>
-                      <span className="font-bold">R$ 10k - R$ 100k</span>
-                    </div>
+                  <div className="bg-white/20 rounded-lg p-2">
+                    <div className="font-bold">Serviços</div>
+                    <div className="text-xs text-blue-200">R$ 10k - R$ 100k</div>
                   </div>
                 </div>
 
