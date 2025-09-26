@@ -32,8 +32,7 @@ const ContactForm = () => {
 
   const objetivos = [
     { id: 'imovel', label: 'Adquirir Imóvel', icon: Home, description: 'Casa, apartamento, terreno' },
-    { id: 'veiculo', label: 'Adquirir Veículo', icon: Car, description: 'Carro, moto, caminhão' },
-    { id: 'servicos', label: 'Adquirir Serviços', icon: Wrench, description: 'Reformas, viagens, cursos' }
+    { id: 'veiculo', label: 'Adquirir Veículo', icon: Car, description: 'Carro, moto, caminhão' }
   ]
 
   const validateForm = () => {

@@ -106,11 +106,10 @@ const Footer = () => {
 
           {/* Services */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Nossos Serviços</h3>
+            <h3 className="text-lg font-semibold">Nossos Produtos</h3>
             <nav className="flex flex-col space-y-2">
               <span className="text-gray-300">Consórcios de Imóveis</span>
               <span className="text-gray-300">Consórcios de Veículos</span>
-              <span className="text-gray-300">Consórcios de Serviços</span>
               <span className="text-gray-300">Consultoria Especializada</span>
             </nav>
           </div>

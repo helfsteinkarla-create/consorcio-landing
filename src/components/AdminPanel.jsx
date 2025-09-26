@@ -44,8 +44,7 @@ const AdminPanel = () => {
 
   const tiposBem = [
     { id: 'imovel', label: 'Imóvel', icon: Home, color: 'bg-blue-500' },
-    { id: 'veiculo', label: 'Veículo', icon: Car, color: 'bg-green-500' },
-    { id: 'servicos', label: 'Serviços', icon: Wrench, color: 'bg-purple-500' }
+    { id: 'veiculo', label: 'Veículo', icon: Car, color: 'bg-green-500' }
   ]
 
   useEffect(() => {
@@ -325,7 +324,6 @@ const AdminPanel = () => {
               <option value="">Todos os tipos</option>
               <option value="imovel">Imóvel</option>
               <option value="veiculo">Veículo</option>
-              <option value="servicos">Serviços</option>
             </select>
             
             <select
@@ -482,7 +480,6 @@ const AdminPanel = () => {
                         <option value="">Selecione o tipo</option>
                         <option value="imovel">Imóvel</option>
                         <option value="veiculo">Veículo</option>
-                        <option value="servicos">Serviços</option>
                       </select>
                     </div>
                   </div>

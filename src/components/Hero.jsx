@@ -330,11 +330,10 @@ const Hero = () => {
                   </ScrollAnimation>
 
                   <ScrollAnimation direction="up" delay={1.1}>
-                    <div className="grid grid-cols-3 gap-3 text-center text-sm">
+                    <div className="grid grid-cols-2 gap-3 text-center text-sm">
                       {[
                         { type: 'Imóveis', range: 'R$ 50k - R$ 800k', color: 'from-blue-400 to-cyan-400' },
-                        { type: 'Veículos', range: 'R$ 20k - R$ 200k', color: 'from-green-400 to-emerald-400' },
-                        { type: 'Serviços', range: 'R$ 10k - R$ 100k', color: 'from-purple-400 to-pink-400' }
+                        { type: 'Veículos', range: 'R$ 20k - R$ 200k', color: 'from-green-400 to-emerald-400' }
                       ].map((item, index) => (
                         <motion.div 
                           key={item.type}

@@ -19,8 +19,7 @@ const Simulator = () => {
 
   const tiposBem = [
     { id: 'imovel', label: 'Imóvel', icon: Home, color: 'bg-blue-500' },
-    { id: 'veiculo', label: 'Veículo', icon: Car, color: 'bg-green-500' },
-    { id: 'servicos', label: 'Serviços', icon: Wrench, color: 'bg-purple-500' }
+    { id: 'veiculo', label: 'Veículo', icon: Car, color: 'bg-green-500' }
   ]
 
   const prazosDisponiveis = [

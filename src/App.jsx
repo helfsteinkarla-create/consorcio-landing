@@ -82,7 +82,7 @@ function App() {
               </p>
               
               <motion.div 
-                className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto"
+                className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
@@ -90,8 +90,7 @@ function App() {
               >
                 {[
                   { title: 'Imóveis', count: '500+', icon: '🏠' },
-                  { title: 'Veículos', count: '300+', icon: '🚗' },
-                  { title: 'Serviços', count: '200+', icon: '🔧' }
+                  { title: 'Veículos', count: '300+', icon: '🚗' }
                 ].map((item, index) => (
                   <motion.div
                     key={item.title}
