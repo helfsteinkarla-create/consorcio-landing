@@ -3,6 +3,9 @@ import { CheckCircle, ArrowRight, Star, Play, Shield, Zap, TrendingUp } from 'lu
 import { motion } from 'framer-motion'
 import ScrollAnimation from './ScrollAnimation'
 import heroBackground from '../assets/hero-background.png'
+import portoConsorcio from '../assets/porto-consorcio.webp'
+import hsConsorcio from '../assets/hs-consorcio.png'
+import volkswagenConsorcio from '../assets/volkswagen-consorcio.jpg'
 
 const Hero = () => {
   const benefits = [
@@ -71,7 +74,7 @@ const Hero = () => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8, delay: 0.6 }}
                   >
-                    Realize seu sonho
+                    Atma, especialista
                   </motion.span>
                   <motion.span 
                     className="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400"
@@ -79,16 +82,59 @@ const Hero = () => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8, delay: 0.8 }}
                   >
-                    hoje mesmo!
+                    em soluções patrimoniais
                   </motion.span>
                 </h1>
               </ScrollAnimation>
               
               <ScrollAnimation direction="left" delay={0.6}>
                 <p className="text-xl lg:text-2xl text-gray-100 leading-relaxed max-w-2xl">
-                  Cartas de consórcio contempladas com crédito liberado na hora. 
-                  Compre seu imóvel, veículo ou realize seus projetos sem burocracia.
+                  Atma, sua consultoria profissional em consórcio. Trabalhamos com as maiores administradoras do Brasil.
                 </p>
+              </ScrollAnimation>
+              
+              {/* Logos das Administradoras */}
+              <ScrollAnimation direction="up" delay={0.7}>
+                <div className="mt-8">
+                  <p className="text-sm text-gray-300 mb-4 text-center">Parceiros de confiança:</p>
+                  <div className="flex items-center justify-center space-x-8 flex-wrap gap-4">
+                    <motion.div
+                      className="bg-white/10 backdrop-blur-sm rounded-lg p-4 hover:bg-white/20 transition-all duration-300"
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <img 
+                        src={portoConsorcio} 
+                        alt="Porto Seguro Consórcio" 
+                        className="h-12 w-auto object-contain"
+                      />
+                    </motion.div>
+                    
+                    <motion.div
+                      className="bg-white/10 backdrop-blur-sm rounded-lg p-4 hover:bg-white/20 transition-all duration-300"
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <img 
+                        src={hsConsorcio} 
+                        alt="HS Consórcio" 
+                        className="h-12 w-auto object-contain"
+                      />
+                    </motion.div>
+                    
+                    <motion.div
+                      className="bg-white/10 backdrop-blur-sm rounded-lg p-4 hover:bg-white/20 transition-all duration-300"
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <img 
+                        src={volkswagenConsorcio} 
+                        alt="Volkswagen Consórcio Nacional" 
+                        className="h-12 w-auto object-contain"
+                      />
+                    </motion.div>
+                  </div>
+                </div>
               </ScrollAnimation>
             </div>
 
