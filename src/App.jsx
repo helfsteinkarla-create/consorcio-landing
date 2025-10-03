@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import Simulator from './components/Simulator'
-import VideoCarousel from './components/VideoCarousel'
+
 import ContactForm from './components/ContactForm'
 import InstagramEmbed from './components/InstagramEmbed'
 import ChatbotRAG from './components/ChatbotRAG'
@@ -57,11 +57,7 @@ function App() {
         {/* Formulário de Contato */}
         <ContactForm />
         
-        {/* Carrossel de Vídeos Educativos */}
-        <div id="videos">
-          <VideoCarousel />
-        </div>
-        
+
         <Simulator />
         
         {/* Seção de Oportunidades Modernizada */}

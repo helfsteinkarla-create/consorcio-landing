@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
-import { CheckCircle, ArrowRight, Star, Play, Shield, Zap, TrendingUp } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { CheckCircle, ArrowRight, Star, Play, Shield, Zap, TrendingUp, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect } from 'react'
 import ScrollAnimation from './ScrollAnimation'
 import heroBackground from '../assets/hero-background.png'
 import portoConsorcio from '../assets/porto-consorcio.webp'
@@ -8,12 +9,51 @@ import hsConsorcio from '../assets/hs-consorcio.png'
 import volkswagenConsorcio from '../assets/volkswagen-consorcio.jpg'
 
 const Hero = () => {
+  const [currentVideo, setCurrentVideo] = useState(0)
+
+  // Lista de vídeos sem descrições longas
+  const videos = [
+    {
+      id: 'adv9mw3oJ7Q',
+      url: 'https://youtube.com/shorts/adv9mw3oJ7Q?feature=share',
+      title: 'Como Funciona o Consórcio Contemplado'
+    },
+    {
+      id: 'l6tsvgJSJ7s', 
+      url: 'https://youtube.com/shorts/l6tsvgJSJ7s?feature=share',
+      title: 'Vantagens do Consórcio vs Financiamento'
+    },
+    {
+      id: 'ohvzg3UuCeg',
+      url: 'https://youtube.com/shorts/ohvzg3UuCeg?feature=share', 
+      title: 'Documentos Necessários para Consórcio'
+    },
+    {
+      id: 'pYVeAJWN5gc',
+      url: 'https://youtube.com/shorts/pYVeAJWN5gc?feature=share',
+      title: 'Cases de Sucesso - Clientes Atma'
+    }
+  ]
+
   const benefits = [
     "Realize seus sonhos com segurança",
     "Atendimento personalizado e especializado", 
     "Soluções financeiras inteligentes",
     "Experiência comprovada no mercado"
   ]
+
+  // Navegação dos vídeos
+  const nextVideo = () => {
+    setCurrentVideo((prev) => (prev + 1) % videos.length)
+  }
+
+  const prevVideo = () => {
+    setCurrentVideo((prev) => (prev - 1 + videos.length) % videos.length)
+  }
+
+  const openVideo = (url) => {
+    window.open(url, '_blank', 'noopener,noreferrer')
+  }
 
   const scrollToSimulator = () => {
     document.getElementById('simulador')?.scrollIntoView({ behavior: 'smooth' })
@@ -310,23 +350,122 @@ const Hero = () => {
                     </div>
                   </ScrollAnimation>
                   
-                  {/* YouTube Video Embed */}
+                  {/* Carrossel de Vídeos */}
                   <ScrollAnimation direction="scale" delay={0.9}>
-                    <motion.div 
-                      className="relative w-full overflow-hidden rounded-xl shadow-2xl"
-                      style={{ paddingBottom: '177.78%' }}
-                      whileHover={{ scale: 1.02 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <iframe
-                        className="absolute top-0 left-0 w-full h-full"
-                        src="https://www.youtube.com/embed/adv9mw3oJ7Q"
-                        title="Como funciona o consórcio contemplado - Atma"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowFullScreen
-                      ></iframe>
-                    </motion.div>
+                    <div className="relative">
+                      {/* Vídeo Principal */}
+                      <motion.div 
+                        className="relative w-full overflow-hidden rounded-xl shadow-2xl"
+                        style={{ paddingBottom: '177.78%' }}
+                        whileHover={{ scale: 1.02 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <AnimatePresence mode="wait">
+                          <motion.div
+                            key={currentVideo}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.5 }}
+                            className="absolute inset-0"
+                          >
+                            <iframe
+                              className="absolute top-0 left-0 w-full h-full"
+                              src={`https://www.youtube.com/embed/${videos[currentVideo].id}?rel=0&modestbranding=1`}
+                              title={videos[currentVideo].title}
+                              frameBorder="0"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                              allowFullScreen
+                            ></iframe>
+                          </motion.div>
+                        </AnimatePresence>
+
+                        {/* Controles de Navegação */}
+                        <button
+                          onClick={prevVideo}
+                          className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-200 z-10"
+                        >
+                          <ChevronLeft className="w-5 h-5 text-gray-700" />
+                        </button>
+
+                        <button
+                          onClick={nextVideo}
+                          className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-200 z-10"
+                        >
+                          <ChevronRight className="w-5 h-5 text-gray-700" />
+                        </button>
+
+                        {/* Overlay com informações */}
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+                          <div className="flex items-center justify-between">
+                            <div className="flex-1">
+                              <AnimatePresence mode="wait">
+                                <motion.h4
+                                  key={currentVideo}
+                                  initial={{ opacity: 0, y: 10 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  exit={{ opacity: 0, y: -10 }}
+                                  transition={{ duration: 0.3 }}
+                                  className="text-white font-semibold text-sm"
+                                >
+                                  {videos[currentVideo].title}
+                                </motion.h4>
+                              </AnimatePresence>
+                            </div>
+                            <button
+                              onClick={() => openVideo(videos[currentVideo].url)}
+                              className="flex items-center space-x-1 px-3 py-1 bg-white/20 backdrop-blur-sm text-white rounded-lg hover:bg-white/30 transition-colors text-xs"
+                            >
+                              <ExternalLink className="w-3 h-3" />
+                              <span>YouTube</span>
+                            </button>
+                          </div>
+                        </div>
+                      </motion.div>
+
+                      {/* Indicadores de Vídeo */}
+                      <div className="flex justify-center mt-4 space-x-2">
+                        {videos.map((_, index) => (
+                          <button
+                            key={index}
+                            onClick={() => setCurrentVideo(index)}
+                            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                              index === currentVideo
+                                ? 'bg-blue-400 w-6'
+                                : 'bg-white/40 hover:bg-white/60'
+                            }`}
+                          />
+                        ))}
+                      </div>
+
+                      {/* Thumbnails dos Outros Vídeos */}
+                      <div className="grid grid-cols-3 gap-2 mt-4">
+                        {videos.map((video, index) => {
+                          if (index === currentVideo) return null
+                          return (
+                            <motion.button
+                              key={video.id}
+                              onClick={() => setCurrentVideo(index)}
+                              className="relative aspect-video bg-gray-200 rounded-lg overflow-hidden group"
+                              whileHover={{ scale: 1.05 }}
+                              transition={{ duration: 0.2 }}
+                            >
+                              <img
+                                src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`}
+                                alt={video.title}
+                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                              />
+                              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
+                              <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="w-6 h-6 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center">
+                                  <Play className="w-3 h-3 text-gray-700 ml-0.5" />
+                                </div>
+                              </div>
+                            </motion.button>
+                          )
+                        })}
+                      </div>
+                    </div>
                   </ScrollAnimation>
 
                   <ScrollAnimation direction="up" delay={1.1}>
