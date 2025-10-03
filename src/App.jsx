@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import Simulator from './components/Simulator'
 import ContactForm from './components/ContactForm'
 import InstagramEmbed from './components/InstagramEmbed'
+import ChatbotRAG from './components/ChatbotRAG'
 import AdminRoute from './components/AdminRoute'
 import Footer from './components/Footer'
 import { motion } from 'framer-motion'
@@ -116,6 +117,9 @@ function App() {
         <InstagramEmbed />
       </main>
       <Footer />
+      
+      {/* Chatbot RAG */}
+      <ChatbotRAG />
       
       {/* Link discreto para admin no footer */}
       <div className="text-center py-2 bg-gray-900">
