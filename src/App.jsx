@@ -55,7 +55,9 @@ function App() {
         <Hero />
         
         {/* Formulário de Contato */}
-        <ContactForm />
+        <div id="contato">
+          <ContactForm />
+        </div>
         
 
         <Simulator />

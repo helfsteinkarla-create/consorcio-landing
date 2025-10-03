@@ -55,8 +55,8 @@ const Hero = () => {
     window.open(url, '_blank', 'noopener,noreferrer')
   }
 
-  const scrollToSimulator = () => {
-    document.getElementById('simulador')?.scrollIntoView({ behavior: 'smooth' })
+  const scrollToContact = () => {
+    document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' })
   }
 
   const scrollToOpportunities = () => {
@@ -498,10 +498,10 @@ const Hero = () => {
                     >
                       <Button 
                         className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-4 text-lg shadow-2xl hover:shadow-green-500/25 transition-all duration-300"
-                        onClick={scrollToSimulator}
+                        onClick={scrollToContact}
                       >
                         <Play className="w-5 h-5 mr-2" />
-                        Começar Simulação
+                        Formulário de Interesse
                       </Button>
                     </motion.div>
                   </ScrollAnimation>
