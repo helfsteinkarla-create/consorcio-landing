@@ -3,7 +3,7 @@ import { CheckCircle, ArrowRight, Star, Play, Shield, Zap, TrendingUp, ChevronLe
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import ScrollAnimation from './ScrollAnimation'
-import heroBackground from '../assets/hero-background.png'
+import heroBackground from '../assets/new-hero-background.png'
 import portoConsorcio from '../assets/porto-consorcio.webp'
 import hsConsorcio from '../assets/hs-consorcio.png'
 import volkswagenConsorcio from '../assets/volkswagen-consorcio.jpg'
