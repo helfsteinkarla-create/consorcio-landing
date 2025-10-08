@@ -1,12 +1,26 @@
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Menu, X, Phone, Mail } from 'lucide-react'
-import atmaLogo from '../assets/atma-logo.png'
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { Phone, MessageCircle, Mail, Menu, X } from 'lucide-react';
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      setIsMobileMenuOpen(false);
+    }
+  };
 
   const handleWhatsAppClick = () => {
     const phone = "5564981235976"
@@ -15,112 +29,133 @@ const Header = () => {
     window.open(url, '_blank')
   }
 
+  const menuItems = [
+    { id: 'inicio', label: 'Início', color: 'bg-green-500 hover:bg-green-600', textColor: 'text-white' },
+    { id: 'sobre', label: 'A Atma', color: 'bg-blue-500 hover:bg-blue-600', textColor: 'text-white' },
+    { id: 'modalidades', label: 'Modalidades', color: 'bg-orange-500 hover:bg-orange-600', textColor: 'text-white' },
+    { id: 'contemplados', label: 'Contemplados', color: 'bg-purple-500 hover:bg-purple-600', textColor: 'text-white' },
+    { id: 'contato', label: 'Contato', color: 'bg-pink-500 hover:bg-pink-600', textColor: 'text-white' }
+  ];
+
   return (
-    <header className="bg-white shadow-lg sticky top-0 z-50">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <div className="flex items-center">
-            <img 
-              src={atmaLogo} 
-              alt="Atma Seguros e Consórcios" 
-              className="h-12 w-auto"
-            />
-          </div>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <a href="#inicio" className="text-gray-700 hover:text-blue-600 transition-colors">
-              Início
-            </a>
-            <a href="#simulador" className="text-gray-700 hover:text-blue-600 transition-colors">
-              Simulador
-            </a>
-            <a href="#oportunidades" className="text-gray-700 hover:text-blue-600 transition-colors">
-              Oportunidades
-            </a>
-            <a href="#contato" className="text-gray-700 hover:text-blue-600 transition-colors">
-              Contato
-            </a>
-          </nav>
-
-          {/* Contact Info & CTA */}
-          <div className="hidden lg:flex items-center space-x-4">
-            <div className="flex items-center space-x-2 text-sm text-gray-600">
-              <Phone className="w-4 h-4" />
+    <>
+      {/* Top Bar com Contatos */}
+      <div className="bg-gray-800 text-white py-2 px-4">
+        <div className="max-w-7xl mx-auto flex justify-between items-center text-sm">
+          <div className="flex items-center space-x-6">
+            <a href="tel:+5564981235976" className="flex items-center space-x-2 hover:text-green-400 transition-colors">
+              <Phone size={16} />
               <span>(64) 98123-5976</span>
-            </div>
-            <Button 
-              className="bg-green-600 hover:bg-green-700"
-              onClick={handleWhatsAppClick}
-            >
-              Falar no WhatsApp
-            </Button>
+            </a>
+            <a href="mailto:contato@atma.com.br" className="flex items-center space-x-2 hover:text-blue-400 transition-colors">
+              <Mail size={16} />
+              <span>contato@atma.com.br</span>
+            </a>
           </div>
+          <button 
+            onClick={handleWhatsAppClick}
+            className="flex items-center space-x-2 bg-green-600 hover:bg-green-700 px-3 py-1 rounded-full transition-colors"
+          >
+            <MessageCircle size={16} />
+            <span>WhatsApp</span>
+          </button>
+        </div>
+      </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={toggleMenu}
-              className="p-2"
+      {/* Header Principal */}
+      <motion.header
+        className={`sticky top-0 z-50 transition-all duration-300 ${
+          isScrolled ? 'bg-white shadow-lg' : 'bg-white/95 backdrop-blur-sm'
+        }`}
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="max-w-7xl mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            {/* Logo */}
+            <motion.div
+              className="flex items-center space-x-3"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2 }}
             >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </Button>
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-xl">A</span>
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold text-gray-800">Atma</h1>
+                <p className="text-sm text-gray-600">Corretora</p>
+              </div>
+            </motion.div>
+
+            {/* Menu Desktop */}
+            <nav className="hidden lg:flex items-center space-x-1">
+              {menuItems.map((item, index) => (
+                <motion.button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${item.color} ${item.textColor}`}
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  {item.label}
+                </motion.button>
+              ))}
+            </nav>
+
+            {/* CTA Button */}
+            <motion.button
+              onClick={() => scrollToSection('contato')}
+              className="hidden lg:block bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-bold transition-all duration-200 shadow-lg"
+              whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(220, 38, 38, 0.3)" }}
+              whileTap={{ scale: 0.95 }}
+            >
+              📊 Simule Já!
+            </motion.button>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            >
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
         </div>
 
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden py-4 border-t">
-            <nav className="flex flex-col space-y-4">
-              <a 
-                href="#inicio" 
-                className="text-gray-700 hover:text-blue-600 transition-colors"
-                onClick={toggleMenu}
-              >
-                Início
-              </a>
-              <a 
-                href="#simulador" 
-                className="text-gray-700 hover:text-blue-600 transition-colors"
-                onClick={toggleMenu}
-              >
-                Simulador
-              </a>
-              <a 
-                href="#oportunidades" 
-                className="text-gray-700 hover:text-blue-600 transition-colors"
-                onClick={toggleMenu}
-              >
-                Oportunidades
-              </a>
-              <a 
-                href="#contato" 
-                className="text-gray-700 hover:text-blue-600 transition-colors"
-                onClick={toggleMenu}
-              >
-                Contato
-              </a>
-              <div className="pt-4 border-t">
-                <div className="flex items-center space-x-2 text-sm text-gray-600 mb-3">
-                  <Phone className="w-4 h-4" />
-                  <span>(64) 98123-5976</span>
-                </div>
-                <Button 
-                  className="w-full bg-green-600 hover:bg-green-700"
-                  onClick={handleWhatsAppClick}
+        {/* Mobile Menu */}
+        <motion.div
+          className={`lg:hidden overflow-hidden ${isMobileMenuOpen ? 'max-h-96' : 'max-h-0'}`}
+          initial={false}
+          animate={{ maxHeight: isMobileMenuOpen ? 384 : 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <div className="px-4 py-4 bg-gray-50 border-t">
+            <nav className="space-y-2">
+              {menuItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className={`w-full text-left px-4 py-3 rounded-lg font-medium transition-colors ${item.color} ${item.textColor}`}
                 >
-                  Falar no WhatsApp
-                </Button>
-              </div>
+                  {item.label}
+                </button>
+              ))}
+              <button
+                onClick={() => scrollToSection('contato')}
+                className="w-full text-left px-4 py-3 rounded-lg font-bold bg-red-600 hover:bg-red-700 text-white transition-colors"
+              >
+                📊 Simule Já!
+              </button>
             </nav>
           </div>
-        )}
-      </div>
-    </header>
-  )
+        </motion.div>
+      </motion.header>
+    </>
+  );
 }
 
 export default Header

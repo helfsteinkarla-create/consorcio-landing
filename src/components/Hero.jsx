@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { CheckCircle, ArrowRight, Star, Play, Shield, Zap, TrendingUp, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react'
+import { CheckCircle, ArrowRight, Star, Play, Shield, Zap, TrendingUp, ChevronLeft, ChevronRight, ExternalLink, Home, Car, DollarSign } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import ScrollAnimation from './ScrollAnimation'
@@ -10,6 +10,7 @@ import volkswagenConsorcio from '../assets/volkswagen-consorcio.jpg'
 
 const Hero = () => {
   const [currentVideo, setCurrentVideo] = useState(0)
+  const [currentSlide, setCurrentSlide] = useState(0)
 
   // Lista de vídeos sem descrições longas
   const videos = [
