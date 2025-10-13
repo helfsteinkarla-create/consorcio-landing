@@ -24,16 +24,16 @@ const Header = () => {
 
   const handleWhatsAppClick = () => {
     const phone = "5564981235976"
-    const message = "Olá! Gostaria de saber mais sobre consórcios contemplados."
+    const message = "Olá, Karla! Vim através do site e gostaria de uma consultoria sobre seguros e consórcios."
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`
     window.open(url, '_blank')
   }
 
   const menuItems = [
     { id: 'inicio', label: 'Início', color: 'bg-green-500 hover:bg-green-600', textColor: 'text-white' },
-    { id: 'sobre', label: 'A Atma', color: 'bg-blue-500 hover:bg-blue-600', textColor: 'text-white' },
-    { id: 'modalidades', label: 'Modalidades', color: 'bg-orange-500 hover:bg-orange-600', textColor: 'text-white' },
-    { id: 'contemplados', label: 'Contemplados', color: 'bg-purple-500 hover:bg-purple-600', textColor: 'text-white' },
+    { id: 'sobre', label: 'Sobre Mim', color: 'bg-blue-500 hover:bg-blue-600', textColor: 'text-white' },
+    { id: 'servicos', label: 'Serviços', color: 'bg-orange-500 hover:bg-orange-600', textColor: 'text-white' },
+    { id: 'videos', label: 'Vídeos', color: 'bg-red-500 hover:bg-red-600', textColor: 'text-white' },
     { id: 'contato', label: 'Contato', color: 'bg-pink-500 hover:bg-pink-600', textColor: 'text-white' }
   ];
 
@@ -47,9 +47,9 @@ const Header = () => {
               <Phone size={16} />
               <span>(64) 98123-5976</span>
             </a>
-            <a href="mailto:contato@atma.com.br" className="flex items-center space-x-2 hover:text-blue-400 transition-colors">
+            <a href="mailto:karla@helfstein.com.br" className="flex items-center space-x-2 hover:text-blue-400 transition-colors">
               <Mail size={16} />
-              <span>contato@atma.com.br</span>
+              <span>karla@helfstein.com.br</span>
             </a>
           </div>
           <button 
@@ -79,12 +79,12 @@ const Header = () => {
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.2 }}
             >
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">A</span>
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-green-600 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-xl">KH</span>
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-800">Atma</h1>
-                <p className="text-sm text-gray-600">Corretora</p>
+                <h1 className="text-2xl font-bold text-gray-800">Karla Helfstein</h1>
+                <p className="text-sm text-gray-600">Consultora Patrimonial</p>
               </div>
             </motion.div>
 

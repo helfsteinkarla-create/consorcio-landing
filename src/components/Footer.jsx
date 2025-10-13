@@ -5,7 +5,7 @@ import atmaLogo from '../assets/atma-logo.png'
 const Footer = () => {
   const handleWhatsAppClick = () => {
     const phone = "5564981235976"
-    const message = "Olá! Gostaria de saber mais sobre consórcios contemplados."
+    const message = "Olá, Karla! Vim através do site e gostaria de uma consultoria sobre seguros e consórcios."
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`
     window.open(url, '_blank')
   }
@@ -32,14 +32,18 @@ const Footer = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="space-y-4">
-            <img 
-              src={atmaLogo} 
-              alt="Atma Seguros e Consórcios" 
-              className="h-16 w-auto filter brightness-0 invert"
-            />
+            <div className="flex items-center space-x-3">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-green-600 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-xl">KH</span>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold">Karla Helfstein</h3>
+                <p className="text-sm text-gray-400">Consultora Patrimonial</p>
+              </div>
+            </div>
             <p className="text-gray-300 leading-relaxed">
-              Especialistas em consórcios contemplados. Realizamos sonhos com transparência, 
-              agilidade e as melhores condições do mercado.
+              Especialista em planejamento patrimonial, seguros e consórcios. 
+              Mais de 15 anos de experiência ajudando você a proteger e fazer crescer seu patrimônio.
             </p>
             <div className="space-y-3">
               <h4 className="text-sm font-semibold text-gray-200">Siga-nos no Instagram:</h4>
@@ -150,7 +154,7 @@ const Footer = () => {
         <div className="border-t border-gray-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-gray-400 text-sm">
-              © 2025 Atma Seguros e Consórcios. Todos os direitos reservados.
+              © 2025 Karla Helfstein - Consultora Patrimonial. Todos os direitos reservados.
             </div>
             <div className="flex space-x-6 text-sm">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">

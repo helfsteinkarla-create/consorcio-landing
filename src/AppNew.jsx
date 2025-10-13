@@ -13,6 +13,7 @@ import PainPointsSection from './components/PainPointsSection';
 import HowItWorksSection from './components/HowItWorksSection';
 import ServicesSection from './components/ServicesSection';
 import AboutKarlaSection from './components/AboutKarlaSection';
+import VideoSection from './components/VideoSection';
 import TestimonialsSection from './components/TestimonialsSection';
 import B2BSection from './components/B2BSection';
 import FAQSection from './components/FAQSection';
@@ -53,15 +54,26 @@ function AppNew() {
     >
       <Header />
       <main>
-        <HeroNew />
+        <section id="inicio">
+          <HeroNew />
+        </section>
         <PainPointsSection />
         <HowItWorksSection />
-        <ServicesSection />
-        <AboutKarlaSection />
+        <section id="servicos">
+          <ServicesSection />
+        </section>
+        <section id="sobre">
+          <AboutKarlaSection />
+        </section>
+        <section id="videos">
+          <VideoSection />
+        </section>
         <TestimonialsSection />
         <B2BSection />
         <FAQSection />
-        <ContactFormNew />
+        <section id="contato">
+          <ContactFormNew />
+        </section>
       </main>
       <Footer />
       <ChatbotRAG />

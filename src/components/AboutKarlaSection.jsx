@@ -18,8 +18,8 @@ const AboutKarlaSection = () => {
             <div className="relative w-full max-w-md mx-auto">
               <div className="absolute -top-4 -left-4 w-full h-full bg-gradient-to-r from-blue-200 to-green-200 rounded-2xl transform -rotate-3"></div>
               <img 
-                src="https://via.placeholder.com/500x600" // Substituir com a imagem real da Karla
-                alt="Karla Helfstein" 
+                src="/src/assets/images/karla-helfstein.jpg"
+                alt="Karla Helfstein - Especialista em Seguros e Consórcios" 
                 className="relative w-full h-auto rounded-2xl shadow-2xl z-10"
               />
               <div className="absolute -bottom-4 -right-4 w-48 bg-white/80 backdrop-blur-sm p-4 rounded-xl shadow-lg border border-gray-100 z-20">
